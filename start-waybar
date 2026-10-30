@@ -18,5 +18,12 @@ pick() {
 
 wm="$(pick)"
 echo "waybar -> $wm  ($X/$wm/waybar/config)"
+
+# driftwm: push bookmark changes to the bar instead of polling (SIGRTMIN+12)
+pkill -f "$X/driftwm/waybar/bookmark-watch" 2>/dev/null
+if [ "$wm" = driftwm ]; then
+  "$X/driftwm/waybar/bookmark-watch" >/dev/null 2>&1 &
+fi
+
 exec waybar --config "$X/$wm/waybar/config" \
            --style  "$X/$wm/waybar/style/$THEME"

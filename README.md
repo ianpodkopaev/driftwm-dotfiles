@@ -25,6 +25,7 @@ config/
   driftwm/waybar/          # FULL waybar for driftwm
     config                 # includes ../driftwm/waybar/Modules*
     bookmarks.py           # writes the bookmark-row cache (one line per bookmark)
+    bookmark-watch         # pushes driftwm changes to the bar (SIGRTMIN+12)
     Modules*  UserModules  # module bank (incl. custom/bm0..9 + group/bookmarks)
     configs/ dusky/ wallust/  style/   # all themes
   driftwm/config.toml      # driftwm keybindings (super+N bookmark toggle)
@@ -97,9 +98,14 @@ empty bookmarks are dimmed (`.empty`).
   `~/.cache`).
 - **`super+shift+N`** saves the current view as bookmark N.
 
-The row updates once a second from a cache (`~/.cache/driftwm-bookmarks.txt`)
-written by one `bookmarks.py` process; the ten waybar modules only read their
-line. If driftwm isn't running the modules emit nothing and hide
+The row updates **event-driven**: `bookmark-watch` (started by `start-waybar`)
+streams `driftwm msg subscribe` and, when the row would actually change, sends
+waybar `SIGRTMIN+12` — the `custom/bm0..9` modules' `"signal"` — so a jump shows
+in ~0.1s instead of waiting for a poll. One `bookmarks.py` process rewrites the
+cache (`~/.cache/driftwm-bookmarks.txt`, one line per bookmark) and the ten
+modules just read their line. The modules also keep a 5s `interval` as a
+fallback (e.g. a newly saved bookmark changes no state, so it appears within
+5s). If driftwm isn't running the modules emit nothing and hide
 (`hide-empty-text: true`). Under hyprland the bar uses hyprland's own
 `hyprland/workspaces` instead, so nothing driftwm-specific runs there.
 

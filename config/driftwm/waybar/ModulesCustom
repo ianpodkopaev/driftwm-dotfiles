@@ -326,7 +326,8 @@
 // refreshes the cache the others read. Click jumps; super+N toggles back.
 "custom/bm0": {
 	"exec": "$HOME/.config/driftwm/waybar/bookmarks.py; sed -n '1{/./p}' $HOME/.cache/driftwm-bookmarks.txt",
-	"interval": 1,
+	"interval": 5,
+	"signal": 12,
 	"format": "{}",
 	"return-type": "json",
 	"hide-empty-text": true,
@@ -335,7 +336,8 @@
 },
 "custom/bm1": {
 	"exec": "sed -n '2{/./p}' $HOME/.cache/driftwm-bookmarks.txt",
-	"interval": 1,
+	"interval": 5,
+	"signal": 12,
 	"format": "{}",
 	"return-type": "json",
 	"hide-empty-text": true,
@@ -344,7 +346,8 @@
 },
 "custom/bm2": {
 	"exec": "sed -n '3{/./p}' $HOME/.cache/driftwm-bookmarks.txt",
-	"interval": 1,
+	"interval": 5,
+	"signal": 12,
 	"format": "{}",
 	"return-type": "json",
 	"hide-empty-text": true,
@@ -353,7 +356,8 @@
 },
 "custom/bm3": {
 	"exec": "sed -n '4{/./p}' $HOME/.cache/driftwm-bookmarks.txt",
-	"interval": 1,
+	"interval": 5,
+	"signal": 12,
 	"format": "{}",
 	"return-type": "json",
 	"hide-empty-text": true,
@@ -362,7 +366,8 @@
 },
 "custom/bm4": {
 	"exec": "sed -n '5{/./p}' $HOME/.cache/driftwm-bookmarks.txt",
-	"interval": 1,
+	"interval": 5,
+	"signal": 12,
 	"format": "{}",
 	"return-type": "json",
 	"hide-empty-text": true,
@@ -371,7 +376,8 @@
 },
 "custom/bm5": {
 	"exec": "sed -n '6{/./p}' $HOME/.cache/driftwm-bookmarks.txt",
-	"interval": 1,
+	"interval": 5,
+	"signal": 12,
 	"format": "{}",
 	"return-type": "json",
 	"hide-empty-text": true,
@@ -380,7 +386,8 @@
 },
 "custom/bm6": {
 	"exec": "sed -n '7{/./p}' $HOME/.cache/driftwm-bookmarks.txt",
-	"interval": 1,
+	"interval": 5,
+	"signal": 12,
 	"format": "{}",
 	"return-type": "json",
 	"hide-empty-text": true,
@@ -389,7 +396,8 @@
 },
 "custom/bm7": {
 	"exec": "sed -n '8{/./p}' $HOME/.cache/driftwm-bookmarks.txt",
-	"interval": 1,
+	"interval": 5,
+	"signal": 12,
 	"format": "{}",
 	"return-type": "json",
 	"hide-empty-text": true,
@@ -398,7 +406,8 @@
 },
 "custom/bm8": {
 	"exec": "sed -n '9{/./p}' $HOME/.cache/driftwm-bookmarks.txt",
-	"interval": 1,
+	"interval": 5,
+	"signal": 12,
 	"format": "{}",
 	"return-type": "json",
 	"hide-empty-text": true,
@@ -407,7 +416,8 @@
 },
 "custom/bm9": {
 	"exec": "sed -n '10{/./p}' $HOME/.cache/driftwm-bookmarks.txt",
-	"interval": 1,
+	"interval": 5,
+	"signal": 12,
 	"format": "{}",
 	"return-type": "json",
 	"hide-empty-text": true,

@@ -32,7 +32,8 @@ mkdir -p "$BIN" "$AUTOSTART" "$X/driftwm" "$X/hypr"
 # full, self-contained waybar into each WM dir
 cp -a "$SRC/driftwm/waybar/." "$X/driftwm/waybar"
 cp -a "$SRC/hypr/waybar/."   "$X/hypr/waybar"
-chmod +x "$X/driftwm/waybar/"*.py "$X/hypr/waybar/"*.py 2>/dev/null || true
+chmod +x "$X/driftwm/waybar/"*.py "$X/driftwm/waybar/bookmark-watch" \
+         "$X/hypr/waybar/"*.py 2>/dev/null || true
 # driftwm keybindings (super+N bookmark jump/toggle)
 cp "$SRC/driftwm/config.toml" "$X/driftwm/config.toml"
 # remove any stale shared dir from an older install (now redundant)

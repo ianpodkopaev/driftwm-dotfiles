@@ -1,0 +1,84 @@
+#!/usr/bin/env python3
+"""Push driftwm bookmark changes to waybar instead of waiting for a poll.
+
+waybar only re-runs a custom module's exec on whole-second intervals, so a
+bookmark jump could take a second to show. This watches driftwm's event stream
+and sends waybar SIGRTMIN+12 (the custom/bm* modules' "signal") whenever the row
+would actually look different — a jump, a window moving between bookmarks.
+The 5s interval on those modules stays as a fallback (e.g. a newly saved
+bookmark, which changes no state).
+"""
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+PRODUCER = os.path.join(HERE, "bookmarks.py")
+
+
+def waybar_pids():
+    try:
+        out = subprocess.run(
+            ["pgrep", "-x", "waybar"], capture_output=True, text=True, timeout=1
+        ).stdout
+    except Exception:
+        return []
+    return [int(p) for p in out.split()]
+
+
+def signature(st):
+    """What the row depends on: active bookmark + which windows sit where."""
+    wins = tuple(sorted(
+        (w.get("app_id") or "", *(w.get("position") or [0, 0]))
+        for w in st.get("windows") or [] if not w.get("is_widget")
+    ))
+    return st.get("active_bookmark"), wins
+
+
+def main():
+    # start-waybar launches us just before waybar itself
+    for _ in range(50):
+        if waybar_pids():
+            break
+        time.sleep(0.1)
+
+    last = object()
+    while waybar_pids():
+        try:
+            p = subprocess.Popen(
+                ["driftwm", "msg", "subscribe", "--json"],
+                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True,
+            )
+        except Exception:
+            time.sleep(1)
+            continue
+        for line in p.stdout:
+            try:
+                st = json.loads(line).get("State") or {}
+            except Exception:
+                continue
+            sig = signature(st)
+            if sig == last:
+                continue
+            last = sig
+            try:
+                subprocess.run([PRODUCER], timeout=2, check=False)
+            except Exception:
+                pass
+            for pid in waybar_pids():
+                try:
+                    os.kill(pid, signal.SIGRTMIN + 12)
+                except Exception:
+                    pass
+        p.wait()
+        time.sleep(1)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(0)
