@@ -22,6 +22,7 @@ pac() { "${SUDO[@]}" pacman -S --needed "$@"; }
 
 echo "==> 1/3 packages"
 pac waybar waybar-weather cava playerctl swaync grim slurp kitty rofi fish jq
+pac gtklock swayidle imagemagick
 if ! command -v driftwm >/dev/null 2>&1; then
   if command -v yay >/dev/null 2>&1; then yay -S driftwm
   else echo "   driftwm not installed and yay not found:  yay -S driftwm  (AUR)"; fi
@@ -41,7 +42,13 @@ rm -rf "$X/waybar"
 # launcher + bookmark toggle -> $BIN
 cp "$REPO/start-waybar" "$BIN/start-waybar"
 cp "$REPO/driftwm-bookmark" "$BIN/driftwm-bookmark"
-chmod +x "$BIN/start-waybar" "$BIN/driftwm-bookmark"
+cp "$REPO/lock-screen" "$BIN/lock-screen"
+cp "$REPO/start-idle" "$BIN/start-idle"
+chmod +x "$BIN/start-waybar" "$BIN/driftwm-bookmark" \
+         "$BIN/lock-screen" "$BIN/start-idle"
+# lockscreen theme (gtklock); background.jpg is generated on first lock
+mkdir -p "$X/gtklock"
+cp -a "$SRC/gtklock/." "$X/gtklock"
 # XDG autostart (picked up by driftwm's xdg-desktop-autostart.target)
 cat > "$AUTOSTART/waybar.desktop" <<EOF
 [Desktop Entry]
@@ -49,6 +56,14 @@ Type=Application
 Name=Waybar
 Comment=The bar — follows the active WM (driftwm or hyprland)
 Exec=$BIN/start-waybar
+X-GNOME-Autostart-enabled=true
+EOF
+cat > "$AUTOSTART/swayidle.desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Name=Idle (swayidle + gtklock)
+Comment=Lock on idle / before sleep (driftwm)
+Exec=$BIN/start-idle
 X-GNOME-Autostart-enabled=true
 EOF
 

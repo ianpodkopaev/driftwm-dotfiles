@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# start-idle — idle/lock daemon for driftwm (swayidle + gtklock).
+# Port of ~/.config/hypr/hypridle.conf: lock on logind lock requests and before
+# sleep, warn at 9 min, lock at 10 min. hypridle's "screen off" listener is
+# dropped: `hyprctl dispatch dpms off` has no driftwm equivalent.
+set -uo pipefail
+lock="$HOME/.local/bin/lock-screen"
+icon="$HOME/.config/swaync/images/ja.png"
+
+exec swayidle -w \
+    lock "$lock" \
+    before-sleep "$lock" \
+    timeout 540 "notify-send -i $icon ' You are idle!'" \
+        resume "notify-send -i $icon ' Oh! you are Back' ' Hello !!!'" \
+    timeout 600 "$lock"
