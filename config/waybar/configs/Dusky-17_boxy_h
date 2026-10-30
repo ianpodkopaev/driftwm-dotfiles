@@ -1,0 +1,31 @@
+/* Dusky port | layout base */
+{
+  "include": [
+    "$HOME/.config/waybar/Modules",
+    "$HOME/.config/waybar/ModulesWorkspaces",
+    "$HOME/.config/waybar/ModulesCustom",
+    "$HOME/.config/waybar/ModulesGroups",
+    "$HOME/.config/waybar/ModulesVertical",
+    "$HOME/.config/waybar/UserModules",
+    "$HOME/.config/waybar/ModulesDusky",
+    "$HOME/.config/waybar/dusky/ov_17_boxy_h",
+  ],
+
+  "backlight": {"device": "intel_backlight", "format": "{icon} {percent}", "format-icons": ["\udb80\udcde", "\udb80\udcdf", "\udb80\udce0"], "tooltip-format": "Brightness: {percent}%"},
+  "battery": {"format": "{icon} {capacity}%", "format-discharging": "{icon} {capacity}%", "format-charging": "{icon} {capacity}%", "format-plugged": "\udb80\udc84", "format-icons": {"charging": ["\udb82\udc9c", "\udb80\udc86", "\udb80\udc87", "\udb80\udc88", "\udb82\udc9d", "\udb80\udc89", "\udb82\udc9e", "\udb80\udc8a", "\udb80\udc8b", "\udb80\udc85"], "default": ["\udb80\udc7a", "\udb80\udc7b", "\udb80\udc7c", "\udb80\udc7d", "\udb80\udc7e", "\udb80\udc7f", "\udb80\udc80", "\udb80\udc81", "\udb80\udc82", "\udb80\udc79"]}, "format-full": "\udb85\udfe2", "tooltip-format-discharging": "{power:>1.0f}W\u2193 {capacity}%", "tooltip-format-charging": "{power:>1.0f}W\u2191 {capacity}%", "interval": 5, "states": {"warning": 20, "critical": 10}},
+  "bluetooth": {"format": "\udb80\udcaf", "format-off": "\udb80\udcb2", "format-connected": "\udb80\udcb1", "tooltip-format": "Devices connected: {num_connections}", "on-click": "dusky-run blueman-manager", "on-click-right": "dusky-run kitty --class bluetui -e bluetui"},
+  "clock": {"format": "{:%I:%M %p  %a %e }", "format-alt": "{:%A %d/%m/%Y}", "tooltip-format": "<tt>{calendar}</tt>", "calendar": {"mode": "year", "mode-mon-col": 3, "on-click-right": "mode", "format": {"months": "<span color='#ffb786'><b>{}</b></span>", "days": "<span color='#e2e2e2'>{}</span>", "weeks": "<span color='#c9ca93'>W{}</span>", "weekdays": "<span color='#ffb786'><b>{}</b></span>", "today": "<span color='#131313' background='#ffb786'><b>{}</b></span>"}}, "actions": {"on-click-right": "mode", "on-scroll-up": "shift_up", "on-scroll-down": "shift_down"}},
+  "cpu": {"interval": 2, "format": "\udb80\udf5b {usage}%", "on-click-right": "dusky-run kitty --class htop -e htop"},
+  "height": 15,
+  "layer": "top",
+  "margin": "0",
+  "memory": {"interval": 2, "format": "\udb80\udf5b {percentage}%", "on-click-right": "dusky-run kitty --class dusky_disk_monitor_io.py -e $HOME/.local/bin/dusky/drives/dusky_disk_monitor_io.py", "states": {"warning": 70, "critical": 90}},
+  "network": {"format-icons": ["\udb82\udd2f", "\udb82\udd1f", "\udb82\udd22", "\udb82\udd25", "\udb82\udd28"], "format": "{icon}", "format-wifi": "{icon}", "format-ethernet": "\udb80\ude00", "format-disconnected": "\udb82\udd2e", "tooltip-format-wifi": "{essid} ({frequency} GHz)\n\u21e3{bandwidthDownBytes}  \u21e1{bandwidthUpBytes}", "tooltip-format-ethernet": "\u21e3{bandwidthDownBytes}  \u21e1{bandwidthUpBytes}", "tooltip-format-disconnected": "Disconnected", "interval": 3, "spacing": 1, "on-click": "foot --app-id=dusky_tui python $HOME/.local/bin/dusky/dusky_tui/python/main/main.py $HOME/.local/bin/dusky/network_manager/tui_dusky_network.py"},
+  "position": "top",
+  "pulseaudio": {"format": "{icon} {volume}%", "on-click": "dusky-run pavucontrol", "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle", "tooltip-format": "Playing at {volume}%", "scroll-step": 5, "format-muted": "\udb81\udf5f", "format-icons": {"default": ["\udb81\udd7f", "\udb81\udd80", "\udb81\udd7e"]}},
+  "reload_style_on_change": true,
+  "spacing": 0,
+  "modules-left": ["clock", "hyprland/window"],
+  "modules-center": ["hyprland/workspaces", "custom/inhibit-suspend"],
+  "modules-right": ["backlight", "bluetooth", "network", "pulseaudio", "cpu", "memory", "battery"],
+}

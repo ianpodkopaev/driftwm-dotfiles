@@ -1,0 +1,4 @@
+# dotfiles: nothing secret in this repo, but keep it tidy if you add more.
+*.bak
+*.swp
+*.git

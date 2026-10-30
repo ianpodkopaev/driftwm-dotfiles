@@ -1,0 +1,32 @@
+/* Dusky port | layout base */
+{
+  "include": [
+    "$HOME/.config/waybar/Modules",
+    "$HOME/.config/waybar/ModulesWorkspaces",
+    "$HOME/.config/waybar/ModulesCustom",
+    "$HOME/.config/waybar/ModulesGroups",
+    "$HOME/.config/waybar/ModulesVertical",
+    "$HOME/.config/waybar/UserModules",
+    "$HOME/.config/waybar/ModulesDusky",
+    "$HOME/.config/waybar/dusky/ov_19_omarchy_h",
+  ],
+
+  "battery": {"format": "{capacity}% {icon}", "format-discharging": "{icon}", "format-charging": "{icon}", "format-plugged": "\uf1e6", "format-icons": {"charging": ["\udb82\udc9c", "\udb80\udc86", "\udb80\udc87", "\udb80\udc88", "\udb82\udc9d", "\udb80\udc89", "\udb82\udc9e", "\udb80\udc8a", "\udb80\udc8b", "\udb80\udc85"], "default": ["\udb80\udc7a", "\udb80\udc7b", "\udb80\udc7c", "\udb80\udc7d", "\udb80\udc7e", "\udb80\udc7f", "\udb80\udc80", "\udb80\udc81", "\udb80\udc82", "\udb80\udc79"]}, "format-full": "\udb80\udc85", "tooltip-format-discharging": "{power:>1.0f}W\u2193 {capacity}%", "tooltip-format-charging": "{power:>1.0f}W\u2191 {capacity}%", "interval": 5, "on-click": "dusky-run kitty --class power_saver.sh --hold -e $HOME/.local/bin/dusky/battery/power_saver.sh --interactive", "on-click-right": "dusky-run kitty --class dusky_hypridle.sh -e $HOME/.local/bin/dusky/hypridle/dusky_hypridle.sh", "states": {"warning": 20, "critical": 10}},
+  "bluetooth": {"format": "\uf294", "format-off": "\udb80\udcb2", "format-disabled": "\udb80\udcb2", "format-connected": "\udb80\udcb1", "format-no-controller": "", "tooltip-format": "Devices connected: {num_connections}", "on-click": "dusky-run kitty --class bluetui -e bluetui"},
+  "clock#horizontal": {"format": "{:L%A %H:%M}", "format-alt": "{:L%d %B W%V %Y}", "tooltip": true, "tooltip-format": "<tt>{calendar}</tt>", "calendar": {"mode": "year", "mode-mon-col": 3, "weeks-pos": "right", "on-scroll": 1, "format": {"months": "<span color='#ffb786'><b>{}</b></span>", "days": "<span color='#e2e2e2'>{}</span>", "weeks": "<span color='#c9ca93'>W{}</span>", "weekdays": "<span color='#ffb786'><b>{}</b></span>", "today": "<span color='#131313' background='#ffb786'><b>{}</b></span>"}}, "actions": {"on-click-right": "mode", "on-scroll-up": "shift_up", "on-scroll-down": "shift_down"}},
+  "clock#vertical": {"format": "{:%H\n\u2009\u2009\u2014\n%M}", "format-alt": "{:L%d %B W%V %Y}", "tooltip": true, "tooltip-format": "<tt>{calendar}</tt>", "calendar": {"mode": "year", "mode-mon-col": 3, "weeks-pos": "right", "on-scroll": 1, "format": {"months": "<span color='#ffb786'><b>{}</b></span>", "days": "<span color='#e2e2e2'>{}</span>", "weeks": "<span color='#c9ca93'>W{}</span>", "weekdays": "<span color='#ffb786'><b>{}</b></span>", "today": "<span color='#131313' background='#ffb786'><b>{}</b></span>"}}, "actions": {"on-click-right": "mode", "on-scroll-up": "shift_up", "on-scroll-down": "shift_down"}},
+  "height": 15,
+  "layer": "top",
+  "margin-bottom": 0,
+  "margin-top": 0,
+  "network": {"format-icons": ["\udb82\udd2f", "\udb82\udd1f", "\udb82\udd22", "\udb82\udd25", "\udb82\udd28"], "format": "{icon}", "format-wifi": "{icon}", "format-ethernet": "\udb80\udc02", "format-disconnected": "\udb82\udd2e", "tooltip-format-wifi": "{essid} ({frequency} GHz)", "tooltip-format-ethernet": "Connected", "tooltip-format-disconnected": "Disconnected", "interval": 3, "spacing": 1, "on-click": "foot --app-id=dusky_tui python $HOME/.local/bin/dusky/dusky_tui/python/main/main.py $HOME/.local/bin/dusky/network_manager/tui_dusky_network.py"},
+  "position": "top",
+  "pulseaudio": {"format": "{icon}", "on-click": "dusky-run pavucontrol", "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle", "tooltip-format": "Playing at {volume}%", "scroll-step": 5, "format-muted": "\ueee8", "format-icons": {"headphone": "\uf025", "headset": "\uf025", "default": ["\uf026", "\uf027", "\uf028"]}},
+  "reload_style_on_change": true,
+  "spacing": 0,
+  "tray": {"icon-size": 11, "spacing": 10},
+  "width": 0,
+  "modules-left": ["custom/omarchy", "hyprland/workspaces"],
+  "modules-center": ["clock#horizontal", "clock#vertical", "custom/weather", "custom/voxtype", "custom/screenrecording-indicator", "custom/notification-silencing-indicator"],
+  "modules-right": ["tray", "bluetooth", "network", "pulseaudio", "battery", "custom/power"],
+}

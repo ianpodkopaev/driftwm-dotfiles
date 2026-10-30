@@ -1,0 +1,276 @@
+/* Dusky port: map matugen Material tokens to wallust palette */
+@import url("../../.config/waybar/wallust/colors-waybar.css");
+
+@define-color background @background;
+@define-color foreground @foreground;
+@define-color on_surface @foreground;
+@define-color surface @background;
+@define-color surface_container @background-alt;
+@define-color surface_container_low @background;
+@define-color surface_container_high @background-alt;
+@define-color surface_container_highest @background-alt;
+@define-color primary @color4;
+@define-color on_primary @background;
+@define-color primary_container @color14;
+@define-color on_primary_container @foreground;
+@define-color primary_fixed @color4;
+@define-color primary_fixed_dim @color14;
+@define-color secondary @color5;
+@define-color on_secondary @background;
+@define-color secondary_container @color13;
+@define-color on_secondary_container @foreground;
+@define-color secondary_fixed_dim @color13;
+@define-color tertiary @color6;
+@define-color on_tertiary @background;
+@define-color tertiary_container @color12;
+@define-color on_tertiary_container @foreground;
+@define-color tertiary_fixed @color6;
+@define-color error @color1;
+@define-color on_error @background;
+@define-color error_container @color9;
+@define-color on_error_container @foreground;
+@define-color outline @color7;
+@define-color outline_variant @color8;
+
+
+@define-color foreground @on_surface;
+
+* {
+  background-color: transparent;
+  color: @foreground;
+
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: 'JetBrainsMono Nerd Font';
+  font-size: 11px;
+}
+
+window#waybar {
+  background-color: @background;
+}
+
+.modules-left {
+  margin-left: 8px;
+}
+
+.modules-right {
+  margin-right: 8px;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 0 4px;
+  margin: 0 1px;
+  min-width: 8px;
+}
+
+#workspaces button.empty {
+  opacity: 0.5;
+}
+
+#workspaces button.active {
+  color: @primary;
+}
+
+#cpu,
+#battery,
+#pulseaudio,
+#custom-omarchy,
+#custom-update,
+#network,
+#bluetooth,
+#tray,
+#clock,
+#custom-weather,
+#custom-screenrecording-indicator,
+#custom-idle-indicator,
+#custom-notification-silencing-indicator,
+#custom-voxtype,
+#custom-power {
+  padding: 0 4px;
+  margin: 0 1px;
+  min-width: 10px;
+  min-height: 0;
+}
+
+#custom-power {
+  color: @primary;
+  font-size: 12px;
+}
+
+tooltip {
+  background-color: @surface_container;
+  border: 1px solid @outline_variant;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+tooltip label {
+  color: @on_surface;
+  font-family: 'JetBrainsMono Nerd Font';
+  font-size: 11px;
+}
+
+#custom-update {
+  font-size: 10px;
+}
+
+#custom-weather.unavailable {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+#custom-screenrecording-indicator.active {
+  color: #a55555;
+}
+
+#custom-idle-indicator.active,
+#custom-notification-silencing-indicator.active {
+  color: #a55555;
+}
+
+#custom-voxtype {
+  min-width: 12px;
+  margin: 0 0 0 7.5px;
+}
+
+#custom-voxtype.recording {
+  color: #a55555;
+}
+
+.left .modules-left,
+.right .modules-left {
+  margin: 8px 0 0 0;
+}
+
+.left .modules-right,
+.right .modules-right {
+  margin: 0 0 8px 0;
+}
+
+.left #workspaces button,
+.right #workspaces button {
+  padding: 4px 0;
+  margin: 1px 0;
+}
+
+.left #cpu,
+.right #cpu,
+.left #battery,
+.right #battery,
+.left #pulseaudio,
+.right #pulseaudio,
+.left #custom-omarchy,
+.right #custom-omarchy,
+.left #custom-update,
+.right #custom-update {
+  margin: 1px 0;
+  padding: 4px 0;
+  min-width: 0;
+  min-height: 10px;
+}
+
+.left #tray,
+.right #tray {
+  margin: 0 0 12px 0;
+}
+
+.left #bluetooth,
+.right #bluetooth {
+  margin: 1px 0;
+  padding: 4px 0;
+  min-height: 10px;
+}
+
+.left #network,
+.right #network {
+  margin: 1px 0;
+  padding: 4px 0;
+  min-height: 10px;
+}
+
+.left #custom-expand-icon,
+.right #custom-expand-icon {
+  margin: 1px 0;
+  padding: 4px 0;
+  min-height: 10px;
+}
+
+.left #clock,
+.right #clock {
+  margin: 6px 0 0 0;
+}
+
+.left #custom-weather,
+.right #custom-weather {
+  margin: 1px 0;
+  padding: 4px 0;
+  min-height: 10px;
+  min-width: 12px;
+  margin-right: 3px;
+}
+
+.left #custom-screenrecording-indicator,
+.right #custom-screenrecording-indicator,
+.left #custom-idle-indicator,
+.right #custom-idle-indicator,
+.left #custom-notification-silencing-indicator,
+.right #custom-notification-silencing-indicator {
+  margin: 4px 0 0 0;
+  min-width: 0;
+  min-height: 10px;
+}
+
+.left #custom-voxtype,
+.right #custom-voxtype {
+  margin: 5px 0 0 0;
+  min-width: 0;
+  min-height: 10px;
+}
+
+#custom-expand-icon.vertical,
+.left #custom-expand-icon.horizontal,
+.right #custom-expand-icon.horizontal {
+  opacity: 0;
+  font-size: 0;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.left #custom-expand-icon.vertical,
+.right #custom-expand-icon.vertical {
+  opacity: 1;
+  font-size: inherit;
+  min-width: 0;
+  min-height: 10px;
+  margin: 1px 0;
+  padding: 4px 0;
+}
+
+#clock.vertical,
+.left #clock.horizontal,
+.right #clock.horizontal {
+  opacity: 0;
+  font-size: 0;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.left #clock.vertical,
+.right #clock.vertical {
+  opacity: 1;
+  font-size: inherit;
+  min-width: 0;
+  min-height: 10px;
+  margin: 6px 0 0 0;
+}

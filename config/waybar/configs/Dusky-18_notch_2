@@ -1,0 +1,26 @@
+/* Dusky port | layout base */
+{
+  "include": [
+    "$HOME/.config/waybar/Modules",
+    "$HOME/.config/waybar/ModulesWorkspaces",
+    "$HOME/.config/waybar/ModulesCustom",
+    "$HOME/.config/waybar/ModulesGroups",
+    "$HOME/.config/waybar/ModulesVertical",
+    "$HOME/.config/waybar/UserModules",
+    "$HOME/.config/waybar/ModulesDusky",
+    "$HOME/.config/waybar/dusky/ov_18_notch_2",
+  ],
+
+  "backlight": {"format": "{icon} {percent}", "tooltip-format": "Brightness: {percent}%\n\n LMB  Brightness\n RMB  Night Light\n MMB  Shaders", "on-click": "dusky-run $HOME/.local/bin/dusky/dusky_system/quickpanal/dusky_quickpanal.py", "on-click-right": "dusky-run $HOME/.local/bin/dusky/dusky_system/quickpanal/dusky_quickpanal.py", "on-click-middle": "dusky-run $HOME/.local/bin/dusky/rofi/shader_menu.sh", "on-scroll-up": "brightnessctl set +5%", "on-scroll-down": "brightnessctl set 5%-", "format-icons": ["\udb80\udcde", "\udb80\udcdf", "\udb80\udce0"]},
+  "battery": {"format": "{icon}", "format-charging": "\uf0e7", "format-icons": ["\udb80\udc8e", "\udb80\udc7a", "\udb80\udc7b", "\udb80\udc7c", "\udb80\udc7d", "\udb80\udc7e", "\udb80\udc7f", "\udb80\udc80", "\udb80\udc81", "\udb80\udc82", "\udb80\udc79"], "interval": 30, "tooltip-format": "Capacity: {capacity}%\n{timeTo}\nHealth: {health}%"},
+  "bluetooth": {"format": "\udb80\udcaf", "format-disabled": "\udb80\udcb2", "format-connected": "\udb80\udcb1 {num_connections}", "format-connected-battery": "\udb80\udcb1 {device_battery_percentage}%", "tooltip-format": "{controller_alias}\n{controller_address}\n\n{device_enumerate}", "tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}", "tooltip-format-enumerate-connected": "\udb80\udcb1 {device_alias}", "tooltip-format-enumerate-connected-battery": "\udb80\udcb1 {device_alias} ({device_battery_percentage}%)", "on-click": "dusky-run blueman-manager", "on-click-right": "dusky-run kitty --class bluetui -e bluetui"},
+  "clock": {"format": "{:%I:%M %p}", "format-alt": "{:%a, %b %d}", "tooltip-format": "<tt>{calendar}</tt>", "calendar": {"mode": "year", "mode-mon-col": 3, "weeks-pos": "right", "on-scroll": 1, "format": {"months": "<span color='#ffb786'><b>{}</b></span>", "days": "<span color='#e2e2e2'>{}</span>", "weeks": "<span color='#c9ca93'>W{}</span>", "weekdays": "<span color='#ffb786'><b>{}</b></span>", "today": "<span color='#131313' background='#ffb786'><b>{}</b></span>"}}, "actions": {"on-click-right": "mode", "on-scroll-up": "shift_up", "on-scroll-down": "shift_down"}},
+  "cpu": {"format": "\uf4bc {usage}%", "interval": 10},
+  "margin-top": 8,
+  "memory": {"format": "\uf1c0 {used:.1f} GB", "interval": 10, "tooltip-format": "{used:.1f} GB / {total:.1f} GB"},
+  "position": "top",
+  "pulseaudio": {"format": "{icon}  {volume}%", "format-muted": "\uf026", "format-icons": {"headphone": "\uf025", "hands-free": "\udb80\udecb", "headset": "\udb80\udecb", "phone": "\uf095", "phone-muted": "\ued17", "portable": "\uf095", "car": "\uf1b9", "default": ["\uf026", "\uf027", "\uf028"]}, "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%", "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%", "on-click": "pavucontrol", "ignored-sinks": ["Easy Effects Sink"]},
+  "reload_style_on_change": true,
+  "tray": {"spacing": 10},
+  "modules-center": ["custom/arch", "clock", "hyprland/workspaces", "memory", "cpu", "group/hide-tray", "group/battery-drawer", "custom/notification", "group/updates-drawer"],
+}

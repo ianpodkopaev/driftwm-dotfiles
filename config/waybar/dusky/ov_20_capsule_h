@@ -1,0 +1,9 @@
+// 20_capsule_h variant overrides
+{
+  "hyprland/workspaces": {"on-click": "activate", "cursor": true, "format": "{id}"},
+  "custom/separator": {"format": "|", "tooltip": false},
+  "custom/theme": {"format": "\ue3dc", "tooltip": true, "tooltip-format": "Switch wallpapers / theme\nLMB: Dark Mode\nRMB: Light Mode\nMMB: Wallpaper Selector", "on-click": "dusky-run \"$HOME/.local/bin/dusky/theme_matugen/theme_ctl.sh\" set --mode dark", "on-click-right": "dusky-run \"$HOME/.local/bin/dusky/theme_matugen/theme_ctl.sh\" set --mode light", "on-click-middle": "dusky-run $HOME/.local/bin/dusky/images/wallpaper_selector.py"},
+  "custom/notification": {"tooltip-format": "Left Click: Launch Mako\nMiddle Click: Clear All\nRight Click: Do Not Disturb", "format": "{}", "return-type": "json", "exec-if": "which makoctl", "exec": "$HOME/.local/bin/dusky/waybar/mako.sh", "interval": 2, "signal": 8, "on-click": "$HOME/.local/bin/dusky/rofi/rofi_mako.sh", "on-click-middle": "$HOME/.local/bin/dusky/waybar/mako.sh --clear && pkill -RTMIN+8 waybar", "on-click-right": "makoctl mode -t do-not-disturb && pkill -RTMIN+8 waybar", "escape": true},
+  "custom/screenrecording-indicator": {"format": "{}", "exec": "if pgrep -x 'wf-recorder' > /dev/null || pgrep -x 'gpu-screen-recorder' > /dev/null;\nthen echo '{\"text\": \"\udb83\udec2\", \"tooltip\": \"Screen Recording in progress\", \"class\": \"active\"}';\nelse echo '{\"text\": \"\", \"tooltip\": \"No active recording\", \"class\": \"inactive\"}';\nfi", "return-type": "json", "interval": 2, "on-click": "dusky-run \"$HOME/.local/bin/dusky/dusky_recorder/dusky_recorder.sh\""},
+  "custom/power": {"format": "\uf011", "tooltip": true, "tooltip-format": "Power Menu", "on-click": "dusky-run \"$HOME/.local/bin/dusky/wlogout/wlogout_scale.sh\""},
+}

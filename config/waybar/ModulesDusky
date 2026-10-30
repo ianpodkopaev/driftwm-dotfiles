@@ -1,0 +1,70 @@
+// Dusky shared modules (deduped)
+{
+  "custom/calculator": {"format": "\uf1ec", "on-click": "dusky-run pkill rofi; $HOME/.local/bin/dusky/rofi/calculator.sh", "tooltip": true, "tooltip-format": "Calculator"},  // 02_reminiscent_h
+  "custom/cava": {"exec": "$HOME/.local/bin/dusky/waybar/cava.sh --10 --clean", "format": "{}"},  // 04_notch_h
+  "custom/clip": {"format": "\uf0ea", "on-click": "dusky-run pkill rofi; rofi -modi 'clipboard:$HOME/.local/bin/dusky/rofi/rofi_clipboard.sh' -show clipboard", "tooltip": true, "tooltip-format": "Clipboard"},  // 02_reminiscent_h
+  "custom/distro": {"format": "\udb80\udf3d", "on-click": "gdbus call --session --dest com.github.dusky.controlcenter --object-path /com/github/dusky/controlcenter --method org.freedesktop.Application.Activate '{}'", "on-click-right": "gdbus call --session --dest org.dusky.quickpanal --object-path /org/dusky/quickpanal --method org.freedesktop.Application.Activate '{}'", "tooltip-format": "Control Center"},  // 01_mechabar_h
+  "custom/dropdown#arrow": {"format": "\uf105", "tooltip": true, "tooltip-format": "Reveal tray"},  // 04_notch_h, 18_notch_2
+  "custom/expand": {"format": "\udb80\udd42", "tooltip": false},  // 14_dot_h
+  "custom/files": {"format": "\uf07c", "on-click": "$HOME/.local/bin/dusky/waybar/launch_app.sh file-manager", "tooltip": true, "tooltip-format": "File Manager"},  // 02_reminiscent_h
+  "custom/firefox": {"format": "\uf269", "on-click": "$HOME/.local/bin/dusky/waybar/launch_app.sh browser", "tooltip": true, "tooltip-format": "Browser"},  // 02_reminiscent_h
+  "custom/idle-indicator": {"escape": true, "exec": "if pgrep -x 'hypridle' > /dev/null;\nthen echo '{\"text\": \"\udb80\udf3e\", \"tooltip\": \"Suspend is enabled.\\nClick to disable.\", \"class\": \"enabled\"}';\nelse echo '{\"text\": \"\uf52a\", \"tooltip\": \"Suspend is disabled.\\nClick to enable.\", \"class\": \"disabled\"}';\nfi", "format": "{}", "interval": 5, "on-click": "dusky-run \"$HOME/.local/bin/dusky/waybar/toggle_hypridle.sh\"", "return-type": "json", "signal": 9},  // 20_capsule_h
+  "custom/left_div#1": {"format": "\ue0b2", "tooltip": false},  // 01_mechabar_h
+  "custom/left_div#2": {"format": "\ue0b2", "tooltip": false},  // 01_mechabar_h
+  "custom/left_div#3": {"format": "\ue0b2", "tooltip": false},  // 01_mechabar_h
+  "custom/left_div#4": {"format": "\ue0b2", "tooltip": false},  // 01_mechabar_h
+  "custom/left_div#5": {"format": "\ue0b2", "tooltip": false},  // 01_mechabar_h
+  "custom/left_div#6": {"format": "\ue0b2", "tooltip": false},  // 01_mechabar_h
+  "custom/left_div#7": {"format": "\ue0b2", "tooltip": false},  // 01_mechabar_h
+  "custom/left_div#8": {"format": "\ue0b2", "tooltip": false},  // 01_mechabar_h
+  "custom/left_inv#1": {"format": "\ue0d6", "tooltip": false},  // 01_mechabar_h
+  "custom/left_inv#2": {"format": "\ue0d6", "tooltip": false},  // 01_mechabar_h
+  "custom/logout": {"format": "\udb80\udf43", "on-click": "hyprctl dispatch exit", "tooltip-format": "Logout"},  // 05_circular_h
+  "custom/lyrics": {"escape": true, "exec": "lrcsnc", "min-length": 1},  // 09_retro_compact_h
+  "custom/net-speed": {"exec": "$HOME/.local/bin/dusky/waybar/network/network_meter_calling.sh --horizontal", "format": "{}", "interval": 1, "return-type": "json", "tooltip": true},  // 01_mechabar_h, 02_reminiscent_h, 03_float_pacman_h, 05_circular_h, 06_nerdy_modern_h, 07_minimal_h, 09_retro_compact_h, 10_chaos_h, 11_shape_shifter_h, 14_dot_h, 15_nerdy_compact_h, 16_compact_bubble_h
+  "custom/net-speed-trigger": {"format": "\u21f5", "tooltip": false},  // 01_mechabar_h
+  "custom/notification-silencing-indicator": {"exec": "if makoctl mode | grep -q 'do-not-disturb'; then echo '{\"text\": \"\udb80\udc9b DND\", \"class\": \"active\"}'; else echo ''; fi", "interval": 2, "on-click": "makoctl mode -t do-not-disturb", "return-type": "json"},  // 19_omarchy_h
+  "custom/notifications": {"align": 0.5, "escape": true, "exec": "$HOME/.local/bin/dusky/waybar/mako.sh --horizontal", "exec-if": "which makoctl", "format": "{}", "interval": 2, "justify": "center", "on-click": "$HOME/.local/bin/dusky/rofi/rofi_mako.sh", "on-click-middle": "$HOME/.local/bin/dusky/waybar/mako.sh --clear && pkill -RTMIN+8 waybar", "on-click-right": "makoctl mode -t do-not-disturb && pkill -RTMIN+8 waybar", "return-type": "json", "signal": 8, "tooltip-format": "Left Click: Launch Mako\nMiddle Click: Clear All\nRight Click: Do Not Disturb"},  // 01_mechabar_h
+  "custom/notifs": {"escape": true, "exec": "$HOME/.local/bin/dusky/waybar/mako.sh", "exec-if": "which makoctl", "format": "{}", "on-click": "$HOME/.local/bin/dusky/rofi/rofi_mako.sh", "on-click-middle": "$HOME/.local/bin/dusky/waybar/mako.sh --clear && pkill -RTMIN+8 waybar", "on-click-right": "makoctl mode -t do-not-disturb && pkill -RTMIN+8 waybar", "return-type": "json", "signal": 8, "tooltip-format": "Notifications\nLMB: Toggle Panel\nMMB: Clear All\nRMB: Do Not Disturb"},  // 02_reminiscent_h
+  "custom/omarchy": {"format": "\udb80\udf3d", "on-click": "rofi -show drun -run-command 'dusky-run {cmd}'", "on-click-right": "dusky-run kitty", "tooltip-format": "Apps Menu"},  // 19_omarchy_h
+  "custom/quit": {"format": "\udb81\uddfc", "on-click": "hyprctl dispatch exit"},  // 02_reminiscent_h
+  "custom/right_div#1": {"format": "\ue0b0", "tooltip": false},  // 01_mechabar_h
+  "custom/right_div#2": {"format": "\ue0b0", "tooltip": false},  // 01_mechabar_h
+  "custom/right_div#3": {"format": "\ue0b0", "tooltip": false},  // 01_mechabar_h
+  "custom/right_div#4": {"format": "\ue0b0", "tooltip": false},  // 01_mechabar_h
+  "custom/right_div#5": {"format": "\ue0b0", "tooltip": false},  // 01_mechabar_h
+  "custom/right_inv#1": {"format": "\ue0d7", "tooltip": false},  // 01_mechabar_h
+  "custom/separator-2": {"format": "\u2502", "tooltip": false},  // 06_nerdy_modern_h, 15_nerdy_compact_h
+  "custom/settings": {"format": "\udb80\udf3d", "on-click": "python3 $HOME/.local/bin/dusky/dusky_system/control_center/dusky_control_center.py", "on-click-right": "gdbus call --session --dest org.dusky.quickpanal --object-path /org/dusky/quickpanal --method org.freedesktop.Application.Activate '{}'", "tooltip": true, "tooltip-format": "Control Center"},  // 14_dot_h
+  "custom/shutdown": {"format": "\udb81\udc25", "on-click": "systemctl poweroff", "tooltip-format": "Shutdown"},  // 05_circular_h
+  "custom/snip": {"format": "\udb80\udd9e", "on-click": "dusky-run $HOME/.local/bin/dusky/images/dusky_screenshot.sh --region --freeze --no-notify --smart", "on-click-right": "dusky-run $HOME/.local/bin/dusky/images/dusky_screenshot.sh --region --freeze --annotate --no-notify --tool arrow --smart", "tooltip": true, "tooltip-format": "Screenshot"},  // 02_reminiscent_h
+  "custom/terminal": {"format": "\uf120", "on-click": "$HOME/.local/bin/dusky/waybar/launch_app.sh terminal", "tooltip": true, "tooltip-format": "Terminal"},  // 02_reminiscent_h
+  "custom/text-editor": {"format": "\udb80\udfeb", "on-click": "$HOME/.local/bin/dusky/waybar/launch_app.sh text-editor", "tooltip": true, "tooltip-format": "Text Editor"},  // 02_reminiscent_h
+  "custom/theme-toggle": {"format": "\ue3dc", "on-click": "dusky-run $HOME/.local/bin/dusky/theme_matugen/theme_ctl.sh set --mode dark", "on-click-middle": "dusky-run $HOME/.local/bin/dusky/images/wallpaper_selector.py", "on-click-right": "dusky-run $HOME/.local/bin/dusky/theme_matugen/theme_ctl.sh set --mode light", "tooltip-format": "Theme Controls\n\n LMB  Dark Mode\n RMB  Light Mode\n MMB  Wallpaper"},  // 09_retro_compact_h, 10_chaos_h, 11_shape_shifter_h, 16_compact_bubble_h
+  "custom/trigger": {"format": "\udb80\udf5c", "max-length": 4, "min-length": 4, "tooltip-format": "System Tray"},  // 01_mechabar_h
+  "custom/update": {"exec": "tail -F ~/.config/dusky/settings/waybar_update_counter_v 2>/dev/null", "format": "{}", "on-click": "dusky-run kitty --class system_update.sh --hold -e $HOME/.local/bin/dusky/update_dusky/system_update.sh --all", "return-type": "json", "tooltip": true},  // 20_capsule_h
+  "custom/voxtype": {"exec": "echo ''", "interval": 3600},  // 19_omarchy_h
+  "group/apps-strip": {"modules": ["custom/firefox", "custom/terminal", "custom/text-editor", "custom/files", "group/group-tools"], "orientation": "horizontal"},  // 02_reminiscent_h
+  "group/brightness-drawer": {"drawer": {"children-class": "brightness-drawer", "click-to-reveal": false, "transition-duration": 400, "transition-left-to-right": false}, "modules": ["backlight", "custom/theme-toggle"], "orientation": "horizontal"},  // 16_compact_bubble_h
+  "group/center": {"modules": ["mpris", "backlight", "bluetooth", "network", "pulseaudio", "battery", "memory", "cpu"], "orientation": "inherit"},  // 20_capsule_h
+  "group/connections": {"modules": ["custom/network", "bluetooth"], "orientation": "inherit"},  // 13_nerdy_compact_v
+  "group/expandable": {"drawer": {"children-class": "expanded-child", "transition-duration": 500, "transition-left-to-right": false}, "modules": ["custom/expand", "cpu", "memory", "disk", "temperature"], "orientation": "horizontal"},  // 14_dot_h
+  "group/group-tools": {"drawer": {"children-class": "other-apps", "transition-duration": 400, "transition-left-to-right": true}, "modules": ["custom/snip", "custom/clip", "custom/calculator"], "orientation": "horizontal"},  // 02_reminiscent_h
+  "group/hardware": {"modules": ["cpu", "memory", "temperature"], "orientation": "inherit"},  // 13_nerdy_compact_v
+  "group/hardware-drawer": {"drawer": {"children-class": "hardware-drawer", "transition-duration": 400, "transition-left-to-right": false}, "modules": ["group/time-batt", "backlight", "pulseaudio#output"], "orientation": "horizontal"},  // 02_reminiscent_h
+  "group/hide-tray": {"drawer": {"children-class": "hide-tray-drawer", "click-to-reveal": false, "transition-duration": "0.5", "transition-left-to-right": true}, "modules": ["custom/dropdown#arrow", "tray"], "orientation": "inherit"},  // 04_notch_h, 18_notch_2
+  "group/launcher-drawer": {"drawer": {"children-class": "launcher-drawer", "transition-duration": 400, "transition-left-to-right": true}, "modules": ["custom/launcher", "custom/inhibit-suspend", "custom/lock", "custom/reboot", "custom/quit"], "orientation": "horizontal"},  // 02_reminiscent_h
+  "group/left-pill": {"modules": ["custom/settings", "clock"], "orientation": "horizontal"},  // 14_dot_h
+  "group/media": {"modules": ["pulseaudio", "backlight"], "orientation": "inherit"},  // 13_nerdy_compact_v
+  "group/media-drawer": {"drawer": {"children-class": "media-drawer", "transition-duration": 300, "transition-left-to-right": false}, "modules": ["pulseaudio", "backlight", "bluetooth", "custom/network"], "orientation": "vertical"},  // 08_minimal_v
+  "group/net-drawer": {"drawer": {"children-class": "net-drawer", "transition-duration": 400, "transition-left-to-right": false}, "modules": ["custom/net-speed", "network", "bluetooth"], "orientation": "horizontal"},  // 02_reminiscent_h
+  "group/net-speed-drawer": {"drawer": {"children-class": "net-speed-drawer", "click-to-reveal": false, "transition-duration": 400, "transition-left-to-right": true}, "modules": ["custom/net-speed-trigger", "custom/net-speed"], "orientation": "horizontal"},  // 01_mechabar_h
+  "group/notif-drawer": {"drawer": {"children-class": "notif-drawer", "click-to-reveal": false, "transition-duration": 400, "transition-left-to-right": true}, "modules": ["custom/notification", "custom/updates"], "orientation": "horizontal"},  // 07_minimal_h
+  "group/power": {"drawer": {"children-class": "power-drawer", "transition-duration": 300, "transition-left-to-right": true}, "modules": ["custom/arch", "custom/lock", "custom/inhibit-suspend", "custom/logout", "custom/reboot", "custom/shutdown"], "orientation": "horizontal"},  // 05_circular_h
+  "group/pulseaudio": {"drawer": {"transition-left-to-right": false}, "modules": ["pulseaudio#output", "pulseaudio#input"], "orientation": "horizontal"},  // 01_mechabar_h
+  "group/stats": {"modules": ["cpu", "memory", "temperature"], "orientation": "vertical"},  // 08_minimal_v, 12_modern_v
+  "group/time-batt": {"modules": ["clock", "battery"], "orientation": "horizontal"},  // 02_reminiscent_h
+  "group/user": {"drawer": {"click-to-reveal": false, "transition-duration": 300, "transition-left-to-right": true}, "modules": ["custom/trigger", "tray"], "orientation": "horizontal"},  // 01_mechabar_h
+  "hyprland/submap": {"format": "\udb84\ude81 {}", "max-length": 12, "tooltip": false},  // 06_nerdy_modern_h, 15_nerdy_compact_h
+  "wlr/taskbar": {"format": "{icon}", "icon-size": 20, "on-click": "activate", "on-click-middle": "close", "on-click-right": "fullscreen", "tooltip-format": "{title:.50}"},  // 02_reminiscent_h
+}

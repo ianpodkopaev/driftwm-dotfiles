@@ -1,0 +1,97 @@
+# Ported from the hyprland (KoolDots) setup. driftwm's own defaults cover
+# navigation, resize, zoom, window cycling, media and brightness; only the
+# personal pieces from hypr and the non-default binds go here.
+
+# ---------------------------------------------------------------- focus
+focus_follows_mouse = true   # hover focus (sloppy), not click
+
+# ---------------------------------------------------------------- env
+[env]
+EDITOR = "nvim"
+TERMINAL = "kitty"
+LAUNCHER = "rofi -show drun -modi drun,filebrowser,run,window"
+
+# ---------------------------------------------------------------- input
+[input.keyboard]
+# us,ru from UserSettings.conf; hypr's per-window layout switcher has no
+# driftwm equivalent, the tap binding below covers global switching
+layout = "us,ru"
+repeat_rate = 50
+repeat_delay = 300
+
+# ---------------------------------------------------------------- background
+[background]
+type = "wallpaper"  # cover viewport, aspect preserved, doesn't scroll/zoom
+path = "~/Pictures/wallpapers/wallhaven-qrgqyq.jpg"
+
+[input.mouse]
+# hypr sensitivity 0 = libinput default; nudge a bit faster
+accel_speed = 0.3
+
+[decorations]
+corner_radius = 10
+border_width = 2
+opacity = 0.9
+
+[effects]
+blur_radius = 3     # hypr: passes = 3
+
+[snap]
+gap = 4.0           # hypr: gaps_in 4
+outer_gap = 14.0    # hypr: gaps_out 14
+
+# ---------------------------------------------------------------- outputs
+# monitors.conf: DP-3 1920x1080@75 origin; HDMI-A-1 1920x1080 to the right
+[[outputs]]
+name = "DP-3"
+mode = "1920x1080@75"
+position = [0, 0]
+
+[[outputs]]
+name = "HDMI-A-1"
+mode = "1920x1080"
+position = [1920, 450]
+
+# ---------------------------------------------------------------- binds
+# mod = super. Defaults kept: mod+arrows focus, mod+shift+arrows move-to-snap,
+# mod+ctrl+arrows pan (hypr: move window), alt+tab cycle, mod+=/-/0/w zoom,
+# mod+1..4 bookmarks (replaces workspaces 1/2/4/5), mod+alt+arrows
+# send-to-output (replaces move workspace to monitor), mod+ctrl+shift+arrows
+# resize-to-snap (replaces mod+shift resize), mod+f fullscreen, mod+t pin,
+# media/brightness/lock/quit/Fn keys.
+
+[keybindings]
+"super+e" = "exec nautilus --new-window"          # was: your UserKeybinds override
+"super+d" = "exec-launcher"                        # rofi via $LAUNCHER
+"super+Return" = "exec-terminal"
+"super+shift+F" = "toggle-fullscreen"              # hypr: true fullscreen; mod+f stays fit
+"super+space" = "toggle-pin-to-screen"             # hypr float = pin in drift's model
+"super+tab" = "cycle-windows forward"
+"super+shift+tab" = "cycle-windows backward"
+"alt+tab" = "none"                                 # you use mod+tab now
+"super+l" = "spawn loginctl lock-session"          # hypr: LockScreen.sh
+"alt+shift" = "switch-layout next"
+"super+shift+n" = "exec swaync-client -t"
+"super+b" = "exec xdg-open https://"
+# hypr: ScreenShot.sh --swappy (region -> swappy annotation -> save)
+"super+shift+s" = "spawn grim -g \"$(slurp)\" - | wl-copy"
+
+# bookmarks 5-0 (defaults only cover 1-4): super+n jump, super+shift+n save view here
+"super+5" = "go-to-bookmark 5"
+"super+6" = "go-to-bookmark 6"
+"super+7" = "go-to-bookmark 7"
+"super+8" = "go-to-bookmark 8"
+"super+9" = "go-to-bookmark 9"
+"super+0" = "go-to-bookmark 0"
+"super+shift+5" = "set-bookmark 5"
+"super+shift+6" = "set-bookmark 6"
+"super+shift+7" = "set-bookmark 7"
+"super+shift+8" = "set-bookmark 8"
+"super+shift+9" = "set-bookmark 9"
+"super+shift+0" = "set-bookmark 0"
+
+# ---------------------------------------------------------------- rules
+# hypr: windowrule border_size 0
+[[window_rules]]
+app_id = "org.remmina.Remmina"
+border_width = 0
