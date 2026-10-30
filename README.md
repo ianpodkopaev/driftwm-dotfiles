@@ -103,6 +103,13 @@ uses (`config/gtklock/style.css` imports it), so the lock screen matches the
 desktop. `lock-screen` regenerates `~/.config/gtklock/background.jpg` with
 `magick` when the wallpaper changes (first lock takes ~1s).
 
+gtklock shows the password form on the first monitor it enumerates, which is
+not necessarily the one you're looking at, so `lock-screen` passes
+`-M <active output>` (read from `driftwm msg state`). With more than one
+monitor, both are covered but the form follows the active output. The pointer
+blanks itself after 5 s idle (`idle-hide`), and any key or motion brings the
+form and the pointer back.
+
 `start-idle` runs `swayidle` for auto-lock, mirroring `hypridle.conf`: warn at
 9 min, lock at 10 min, lock on `loginctl lock-session` and before sleep.
 hypridle's "screen off" listener is not ported — `hyprctl dispatch dpms off`

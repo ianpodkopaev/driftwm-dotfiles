@@ -25,4 +25,13 @@ if [ ! -f "$img" ] || [ "$cfg/driftwm/config.toml" -nt "$img" ]; then
 fi
 
 pidof gtklock >/dev/null && exit 0
-exec gtklock
+
+# gtklock gives the password form to the first window it creates, and windows
+# follow GDK's monitor order — which put the form on the idle output. Put the
+# output that actually has the cursor first via -M.
+out=$(driftwm msg state --json 2>/dev/null |
+      jq -r '.Ok.State.outputs[] | select(.active) | .name' 2>/dev/null | head -1)
+args=()
+[ -n "$out" ] && args=(-M "$out")
+
+exec gtklock "${args[@]}"
