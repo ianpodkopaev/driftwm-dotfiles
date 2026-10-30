@@ -76,13 +76,18 @@ position = [1920, 450]
 # hypr: ScreenShot.sh --swappy (region -> swappy annotation -> save)
 "super+shift+s" = "spawn grim -g \"$(slurp)\" - | wl-copy"
 
-# bookmarks 5-0 (defaults only cover 1-4): super+n jump, super+shift+n save view here
-"super+5" = "go-to-bookmark 5"
-"super+6" = "go-to-bookmark 6"
-"super+7" = "go-to-bookmark 7"
-"super+8" = "go-to-bookmark 8"
-"super+9" = "go-to-bookmark 9"
-"super+0" = "go-to-bookmark 0"
+# bookmarks 1-0: super+n jumps; if already on n, it bounces back to the one you
+# came from. super+shift+n saves the current view as bookmark n.
+"super+1" = "exec driftwm-bookmark 1"
+"super+2" = "exec driftwm-bookmark 2"
+"super+3" = "exec driftwm-bookmark 3"
+"super+4" = "exec driftwm-bookmark 4"
+"super+5" = "exec driftwm-bookmark 5"
+"super+6" = "exec driftwm-bookmark 6"
+"super+7" = "exec driftwm-bookmark 7"
+"super+8" = "exec driftwm-bookmark 8"
+"super+9" = "exec driftwm-bookmark 9"
+"super+0" = "exec driftwm-bookmark 0"
 "super+shift+5" = "set-bookmark 5"
 "super+shift+6" = "set-bookmark 6"
 "super+shift+7" = "set-bookmark 7"

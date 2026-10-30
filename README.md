@@ -1,14 +1,16 @@
 # driftwm + waybar dotfiles
 
 A dotfiles repo for a **driftwm** (trackpad-first *infinite canvas* Wayland
-compositor) session with a **waybar** that shows the current driftwm **bookmark**.
+compositor) session with a **waybar** whose centre shows a live row of the
+driftwm **bookmarks** — one clickable bubble per bookmark, styled exactly like
+hyprland's workspaces.
 Each WM owns its own *self-contained* full waybar dir, and a small launcher points
 waybar at whichever WM is running — so driftwm and hyprland each get a complete,
 independent bar. There is **no** shared `~/.config/waybar` dir.
 
 ## How it works
 - Every WM has a complete waybar under `~/.config/<wm>/waybar/`
-  (config + module bank + all styles + wallust palette + its own `bookmark.py`).
+  (config + module bank + all styles + wallust palette + its own `bookmarks.py`).
 - Waybar always reads the config via a launcher that picks the **running** WM:
   `~/.local/bin/start-waybar` runs `waybar --config ~/.config/<wm>/waybar/config
   --style ~/.config/<wm>/waybar/style/Dusky-07_minimal_h.css`.
@@ -22,11 +24,13 @@ independent bar. There is **no** shared `~/.config/waybar` dir.
 config/
   driftwm/waybar/          # FULL waybar for driftwm
     config                 # includes ../driftwm/waybar/Modules*
-    bookmark.py            # prints "◈ N" (active bookmark, focused window)
-    Modules*  UserModules  # module bank (incl. custom/bookmark)
+    bookmarks.py           # writes the bookmark-row cache (one line per bookmark)
+    Modules*  UserModules  # module bank (incl. custom/bm0..9 + group/bookmarks)
     configs/ dusky/ wallust/  style/   # all themes
+  driftwm/config.toml      # driftwm keybindings (super+N bookmark toggle)
   hypr/waybar/             # FULL waybar for hyprland (identical look)
 start-waybar               # launcher: waybar -> the active WM's dir
+driftwm-bookmark           # super+N jump / bounce-back helper
 README.md  install.sh  .gitignore
 ```
 
@@ -62,15 +66,16 @@ cd ~/dotfiles && bash install.sh
 `install.sh` (idempotent):
 1. `pacman -S` the deps; installs `driftwm` from the AUR if missing.
 2. Copies the full waybar into `~/.config/driftwm/waybar/` and
-   `~/.config/hypr/waybar/`, deploys `~/.local/bin/start-waybar` and the
-   XDG autostart entry, and removes any stale shared `~/.config/waybar`
+   `~/.config/hypr/waybar/`, deploys `~/.local/bin/start-waybar` and
+   `~/.local/bin/driftwm-bookmark`, installs `~/.config/driftwm/config.toml`
+   (bookmark keybindings), and removes any stale shared `~/.config/waybar`
    (redundant now). Your `~/.config/hypr/scripts/*.sh` stay untouched (not in repo).
 3. Enables `driftwm.service` (starts on login).
 
 ## Keybindings
 | Key | Action |
 |---|---|
-| `super+1..0` | Jump to bookmark N |
+| `super+1..0` | Jump to bookmark N — or bounce back if you're already on it |
 | `super+shift+1..0` | Save the current view as bookmark N |
 | `super+Return` | Terminal |
 | `super+d` | rofi launcher |
@@ -80,11 +85,23 @@ cd ~/dotfiles && bash install.sh
 `focus_follows_mouse = true` gives hover focus (sloppy) instead of click.
 
 ## Bookmark behaviour
-The bar shows `◈ N` only while a window has focus. On the empty canvas (no
-focused window) the module emits nothing and waybar hides it
-(`hide-empty-text: true`). Save a bookmark by hovering where you want a "home"
-view and pressing `super+shift+N`. Under hyprland the bookmark module runs but
-`driftwm msg` isn't there, so it shows nothing — it degrades gracefully.
+The bar centre is a row of **all 10 bookmarks**, styled 1:1 like the hyprland
+workspaces bubbles: each bookmark is a rounded bubble showing its number and the
+apps whose windows sit in that bookmark's canvas region (`bookmarks.py`,
+`RADIUS=200` canvas px). The bookmark the camera is on is highlighted (`.active`);
+empty bookmarks are dimmed (`.empty`).
+
+- **Click** a bubble to move to that bookmark.
+- **`super+N`** jumps to bookmark N; if you're already on N it bounces back to
+  the bookmark you came from (`driftwm-bookmark` keeps the previous one in
+  `~/.cache`).
+- **`super+shift+N`** saves the current view as bookmark N.
+
+The row updates once a second from a cache (`~/.cache/driftwm-bookmarks.txt`)
+written by one `bookmarks.py` process; the ten waybar modules only read their
+line. If driftwm isn't running the modules emit nothing and hide
+(`hide-empty-text: true`). Under hyprland the bar uses hyprland's own
+`hyprland/workspaces` instead, so nothing driftwm-specific runs there.
 
 ## Switching the bar (driftwm ↔ hyprland)
 The launcher follows the running compositor automatically. To run the other

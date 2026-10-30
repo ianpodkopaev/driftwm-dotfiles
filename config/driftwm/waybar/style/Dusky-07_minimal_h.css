@@ -82,6 +82,7 @@ window#waybar {
 #custom-notification,
 #custom-updates,
 #workspaces,
+#bookmarks,
 #pulseaudio,
 #bluetooth,
 #network,
@@ -149,6 +150,41 @@ window#waybar {
 }
 
 #workspaces button:hover {
+    background-color: @on_primary_fixed_variant;
+}
+
+/* --- CENTER: driftwm bookmarks — hyprland workspaces style, 1:1 --- */
+#bookmarks {
+    background-color: alpha(@surface_container_high, 0.6);
+    padding: 0 6px;
+}
+
+#bookmarks label {
+    margin: 6px 2px;
+    padding: 0 2px;
+    border-radius: 16px;
+    color: @on_surface_variant;
+    background-color: alpha(@on_surface, 0.12);
+    transition: all 0.2s ease;
+}
+
+#bookmarks label:not(.empty):not(.active) {
+    color: alpha(@tertiary, 0.9);
+    background-color: alpha(@primary, 0.2);
+}
+
+#bookmarks label.active {
+    background-color: @primary;
+    padding: 0 8px;
+    color: @on_primary;
+}
+
+#bookmarks label.urgent {
+    background-color: @error;
+    color: @on_error;
+}
+
+#bookmarks label:hover {
     background-color: @on_primary_fixed_variant;
 }
 

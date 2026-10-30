@@ -32,12 +32,15 @@ mkdir -p "$BIN" "$AUTOSTART" "$X/driftwm" "$X/hypr"
 # full, self-contained waybar into each WM dir
 cp -a "$SRC/driftwm/waybar/." "$X/driftwm/waybar"
 cp -a "$SRC/hypr/waybar/."   "$X/hypr/waybar"
-chmod +x "$X/driftwm/waybar/bookmark.py" "$X/hypr/waybar/bookmark.py"
+chmod +x "$X/driftwm/waybar/"*.py "$X/hypr/waybar/"*.py 2>/dev/null || true
+# driftwm keybindings (super+N bookmark jump/toggle)
+cp "$SRC/driftwm/config.toml" "$X/driftwm/config.toml"
 # remove any stale shared dir from an older install (now redundant)
 rm -rf "$X/waybar"
-# launcher -> $BIN/start-waybar (points waybar at the active WM's dir)
+# launcher + bookmark toggle -> $BIN
 cp "$REPO/start-waybar" "$BIN/start-waybar"
-chmod +x "$BIN/start-waybar"
+cp "$REPO/driftwm-bookmark" "$BIN/driftwm-bookmark"
+chmod +x "$BIN/start-waybar" "$BIN/driftwm-bookmark"
 # XDG autostart (picked up by driftwm's xdg-desktop-autostart.target)
 cat > "$AUTOSTART/waybar.desktop" <<EOF
 [Desktop Entry]

@@ -136,4 +136,21 @@
         "custom/reboot"
       ]
 },
+
+// driftwm bookmarks row (one clickable module per bookmark)
+"group/bookmarks": {
+	"orientation": "horizontal",
+	"modules": [
+		"custom/bm0",
+		"custom/bm1",
+		"custom/bm2",
+		"custom/bm3",
+		"custom/bm4",
+		"custom/bm5",
+		"custom/bm6",
+		"custom/bm7",
+		"custom/bm8",
+		"custom/bm9",
+	],
+},
 }

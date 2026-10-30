@@ -319,15 +319,5 @@
 "custom/arrow10": {
 	"format": "",
 	"tooltip": false
-},
-
-"custom/bookmark": {
-	"exec": "$HOME/.config/hypr/waybar/bookmark.py",
-	"interval": 1,
-	"format": "{}",
-	"return-type": "text",
-	"min-length": 1,
-	"hide-empty-text": true,
-	"tooltip": "Current driftwm bookmark (shown when a window is focused)",
 }
 }
