@@ -71,6 +71,9 @@ position = [1920, 450]
 "alt+tab" = "none"                                 # you use mod+tab now
 "super+l" = "spawn lock-screen"                    # hypr: LockScreen.sh
 "ctrl+alt+l" = "spawn lock-screen"                 # same lock, Windows-style chord
+# ctrl+alt+del: stop the compositor -> driftwm-session tears the session down
+# and the display manager (plasmalogin) shows its login screen again.
+"ctrl+alt+Delete" = "spawn systemctl --user stop driftwm.service"
 "alt+shift" = "switch-layout next"
 "super+shift+n" = "exec swaync-client -t"
 "super+b" = "exec xdg-open https://"

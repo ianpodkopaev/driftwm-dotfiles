@@ -90,6 +90,7 @@ cd ~/dotfiles && bash install.sh
 | `super+shift+s` | Region screenshot (`grim` + `slurp`) |
 | `super+shift+n` | Mark notification |
 | `super+l`, `ctrl+alt+l` | Lock the screen |
+| `ctrl+alt+Delete` | Log out: stop driftwm, back to the login screen |
 
 `focus_follows_mouse = true` gives hover focus (sloppy) instead of click.
 
