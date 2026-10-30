@@ -29,8 +29,8 @@ config/
     Modules*  UserModules  # module bank (incl. custom/bm0..9 + group/bookmarks)
     configs/ dusky/ wallust/  style/   # all themes
   driftwm/config.toml      # driftwm keybindings (super+N bookmark toggle)
+  driftwm/scripts/ClipManager.sh  # clipboard picker (super+alt+v)
   hypr/waybar/             # FULL waybar for hyprland (identical look)
-  hypr/scripts/ClipManager.sh  # clipboard picker (super+alt+v)
   gtklock/                 # lockscreen theme (config.ini + style.css)
 start-waybar               # launcher: waybar -> the active WM's dir
 driftwm-bookmark           # super+N jump / bounce-back helper
@@ -79,8 +79,8 @@ cd ~/dotfiles && bash install.sh
    `~/.local/bin/start-idle`, installs `~/.config/driftwm/config.toml`
    (bookmark + lock keybindings), the gtklock theme, and removes any stale
    shared `~/.config/waybar` (redundant now) and installs
-   `~/.config/hypr/scripts/ClipManager.sh` (the `super+alt+v` picker; the rest
-   of your `~/.config/hypr/scripts/*.sh` stay untouched, not in repo).
+   `~/.config/driftwm/scripts/ClipManager.sh` (the `super+alt+v` picker). Your
+   `~/.config/hypr/scripts/*.sh` stay untouched (not in repo).
 3. Enables `driftwm.service` (starts on login).
 
 ## Keybindings

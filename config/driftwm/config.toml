@@ -80,7 +80,7 @@ position = [1920, 450]
 # hypr: ScreenShot.sh --swappy (region -> swappy annotation -> save)
 "super+shift+s" = "spawn grim -g \"$(slurp)\" - | wl-copy"
 # hypr: $mainMod ALT, V -> ClipManager.sh (cliphist + rofi + wl-copy)
-"super+alt+v" = "spawn $HOME/.config/hypr/scripts/ClipManager.sh"
+"super+alt+v" = "spawn $HOME/.config/driftwm/scripts/ClipManager.sh"
 
 # bookmarks 1-0: super+n jumps; if already on n, it bounces back to the one you
 # came from. super+shift+n saves the current view as bookmark n.
