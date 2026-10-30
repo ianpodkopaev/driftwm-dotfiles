@@ -70,6 +70,7 @@ position = [1920, 450]
 "super+shift+tab" = "cycle-windows backward"
 "alt+tab" = "none"                                 # you use mod+tab now
 "super+l" = "spawn lock-screen"                    # hypr: LockScreen.sh
+"ctrl+alt+l" = "spawn lock-screen"                 # same lock, Windows-style chord
 "alt+shift" = "switch-layout next"
 "super+shift+n" = "exec swaync-client -t"
 "super+b" = "exec xdg-open https://"
