@@ -8,6 +8,13 @@ set -uo pipefail
 cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
 img="$cfg/gtklock/background.jpg"
 
+if ! command -v gtklock >/dev/null 2>&1; then
+    notify-send -u critical "Lockscreen unavailable" \
+        "gtklock is not installed — run: sudo pacman -S gtklock"
+    echo "lock-screen: gtklock not installed (sudo pacman -S gtklock)" >&2
+    exit 1
+fi
+
 if [ ! -f "$img" ] || [ "$cfg/driftwm/config.toml" -nt "$img" ]; then
     wall=$(sed -n 's/^path *= *"\(.*\)"/\1/p' "$cfg/driftwm/config.toml" 2>/dev/null | head -1)
     wall="${wall/#\~/$HOME}"
