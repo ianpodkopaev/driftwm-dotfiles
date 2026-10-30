@@ -1,0 +1,29 @@
+/* Dusky port | layout base */
+{
+  "include": [
+    "$HOME/.config/waybar/Modules",
+    "$HOME/.config/waybar/ModulesWorkspaces",
+    "$HOME/.config/waybar/ModulesCustom",
+    "$HOME/.config/waybar/ModulesGroups",
+    "$HOME/.config/waybar/ModulesVertical",
+    "$HOME/.config/waybar/UserModules",
+    "$HOME/.config/waybar/ModulesDusky",
+    "$HOME/.config/waybar/dusky/ov_05_circular_h",
+  ],
+
+  "backlight": {"format": "{icon} {percent}%", "format-icons": ["\udb80\udcde", "\udb80\udcdf", "\udb80\udce0"], "tooltip-format": "LMB: Brightness Slider\nRMB: hyprsunset Slider\nMMB: Shaders", "on-click": "dusky-run $HOME/.local/bin/dusky/dusky_system/quickpanal/dusky_quickpanal.py", "on-click-right": "dusky-run $HOME/.local/bin/dusky/dusky_system/quickpanal/dusky_quickpanal.py", "on-click-middle": "dusky-run $HOME/.local/bin/dusky/rofi/shader_menu.sh", "on-scroll-up": "brightnessctl set +5%", "on-scroll-down": "brightnessctl set 5%-"},
+  "battery": {"states": {"warning": 30, "critical": 15}, "format": " {icon} {capacity} -{power:.0f}W", "format-charging": " \uf0e7 +{capacity} +{power:.0f}W", "format-plugged": "\udb81\udea5 {capacity}%", "format-icons": ["\udb80\udc8e", "\udb80\udc7a", "\udb80\udc7b", "\udb80\udc7c", "\udb80\udc7d", "\udb80\udc7e", "\udb80\udc7f", "\udb80\udc80", "\udb80\udc81", "\udb80\udc82", "\udb80\udc79"], "on-click": "dusky-run kitty --class power_saver.sh --hold -e $HOME/.local/bin/dusky/battery/power_saver.sh --interactive", "on-click-right": "dusky-run kitty --class dusky_hypridle.sh -e $HOME/.local/bin/dusky/hypridle/dusky_hypridle.sh", "tooltip-format": "{timeTo}\n\n\udb85\udfe6 Health: {health}%\n\udb85\udc0b Power: {power:.2f}W"},
+  "clock": {"format": "{:%I:%M %p}", "format-alt": "\udb80\udced {:%A, %B %d}", "tooltip-format": "<tt>{calendar}</tt>", "on-click": "dusky-run gnome-clocks", "on-click-middle": "dusky-run kitty --class clock -e peaclock", "calendar": {"mode": "year", "mode-mon-col": 3, "weeks-pos": "right", "on-scroll": 1, "format": {"months": "<span color='#ffb77a'><b>{}</b></span>", "days": "<span color='#efe0d6'>{}</span>", "weeks": "<span color='#c3cb97'>W{}</span>", "weekdays": "<span color='#ffb77a'><b>{}</b></span>", "today": "<span color='#19120c' background='#ffb77a'><b>{}</b></span>"}}, "actions": {"on-click-right": "mode", "on-scroll-up": "shift_up", "on-scroll-down": "shift_down"}},
+  "height": 36,
+  "layer": "top",
+  "margin-left": 10,
+  "margin-right": 10,
+  "margin-top": 3,
+  "position": "top",
+  "pulseaudio": {"format": "{icon} {volume}%", "format-muted": "\udb81\udf5f", "tooltip-format": "{desc}\nVolume: {volume}%\n\n LMB  Pavucontrol\n MMB  Mute Toggle\n RMB  Cava", "format-icons": {"default": ["\udb81\udd7f", "\udb81\udd80", "\udb81\udd7e"]}, "on-click": "dusky-run pavucontrol", "on-click-right": "dusky-run kitty --class cava -e cava", "on-click-middle": "pactl set-sink-mute @DEFAULT_SINK@ toggle", "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%", "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"},
+  "reload_style_on_change": true,
+  "spacing": 0,
+  "modules-left": ["group/power", "hyprland/workspaces", "group/updates-drawer"],
+  "modules-center": ["backlight", "clock", "pulseaudio"],
+  "modules-right": ["custom/net-speed", "battery", "custom/notification"],
+}

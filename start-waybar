@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# start-waybar — launch waybar on the active WM's SELF-CONTAINED config.
+#   driftwm  ->  $HOME/.config/driftwm/waybar
+#   hyprland ->  $HOME/.config/hypr/waybar
+# Picks the WM from the running compositor; driftwm is the default.
+set -uo pipefail
+THEME="Dusky-07_minimal_h.css"     # active theme (same name in both dirs)
+X="$HOME/.config"
+
+pick() {
+  for i in 0 1 2 3 4; do
+    pgrep -x driftwm  >/dev/null && { echo driftwm;  return 0; }
+    pgrep -x hyprland >/dev/null && { echo hyprland; return 0; }
+    sleep 0.5
+  done
+  echo driftwm   # default = primary WM
+}
+
+wm="$(pick)"
+echo "waybar -> $wm  ($X/$wm/waybar/config)"
+exec waybar --config "$X/$wm/waybar/config" \
+           --style  "$X/$wm/waybar/style/$THEME"

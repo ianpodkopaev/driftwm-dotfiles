@@ -1,55 +1,61 @@
 #!/usr/bin/env bash
-# dotfiles/install.sh — driftwm + waybar (bookmark bar).
-# Arch-based (CachyOS). Idempotent: safe to re-run.
+# dotfiles/install.sh — driftwm + waybar.
+#
+# Each WM owns its own FULL, self-contained waybar dir (config + modules +
+# all styles + wallust + bookmark.py):
+#   ~/.config/driftwm/waybar/
+#   ~/.config/hypr/waybar/
+# A launcher (~/.local/bin/start-waybar) points waybar at whichever WM is
+# running, and an XDG autostart entry (driftwm runs xdg-desktop-autostart)
+# starts it on login. There is NO ~/.config/waybar dir.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC="$REPO/config"
+BIN="$HOME/.local/bin"
 X="$HOME/.config"
+AUTOSTART="$X/autostart"
 
-# sudo only when not already root
 SUDO=()
 [ "$(id -u)" -eq 0 ] || SUDO=(sudo)
 pac() { "${SUDO[@]}" pacman -S --needed "$@"; }
 
 echo "==> 1/3 packages"
-# bar + apps
 pac waybar waybar-weather cava playerctl swaync grim slurp kitty rofi fish jq
-# driftwm is an AUR package — build it if it isn't already installed.
-if ! command -v driftwm >/dev/null; then
-  if command -v yay >/dev/null; then
-    echo "    building driftwm from the AUR (first build takes a while)..."
-    yay -S driftwm
-  else
-    echo "    driftwm not installed and yay not found. Install it from the AUR:"
-    echo "      yay -S driftwm   (https://aur.archlinux.org/packages/driftwm)"
-    echo "    then re-run this script."
-  fi
-else
-  echo "    driftwm already installed."
+if ! command -v driftwm >/dev/null 2>&1; then
+  if command -v yay >/dev/null 2>&1; then yay -S driftwm
+  else echo "   driftwm not installed and yay not found:  yay -S driftwm  (AUR)"; fi
 fi
-# optional: the alternate hyprland bar (uncomment to also install hyprland)
-# pac hyprland
 
-echo "==> 2/3 copy files into $X"
-for d in driftwm hypr waybar; do
-  cp -a "$SRC/$d/." "$X/$d"   # additive: keeps your existing themes / hyprland scripts
-done
-# the live bar + style:
-ln -sfn "$X/driftwm/waybar/config" "$X/waybar/config"            # active bar = driftwm
-ln -sfn "$X/waybar/style/Dusky-07_minimal_h.css" "$X/waybar/style.css"
-chmod +x "$X/driftwm/waybar/bookmark.py"
+echo "==> 2/3 full waybar into each WM dir + launcher + autostart"
+mkdir -p "$BIN" "$AUTOSTART" "$X/driftwm" "$X/hypr"
+# full, self-contained waybar into each WM dir
+cp -a "$SRC/driftwm/waybar/." "$X/driftwm/waybar"
+cp -a "$SRC/hypr/waybar/."   "$X/hypr/waybar"
+chmod +x "$X/driftwm/waybar/bookmark.py" "$X/hypr/waybar/bookmark.py"
+# remove any stale shared dir from an older install (now redundant)
+rm -rf "$X/waybar"
+# launcher -> $BIN/start-waybar (points waybar at the active WM's dir)
+cp "$REPO/start-waybar" "$BIN/start-waybar"
+chmod +x "$BIN/start-waybar"
+# XDG autostart (picked up by driftwm's xdg-desktop-autostart.target)
+cat > "$AUTOSTART/waybar.desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Name=Waybar
+Comment=The bar — follows the active WM (driftwm or hyprland)
+Exec=$BIN/start-waybar
+X-GNOME-Autostart-enabled=true
+EOF
 
-echo "==> 3/3 enable driftwm.service (starts on login)"
-if command -v driftwm >/dev/null; then
+echo "==> 3/3 driftwm.service"
+if command -v driftwm >/dev/null 2>&1; then
   systemctl --user daemon-reload
   systemctl --user enable driftwm.service
 fi
 
 echo
-echo "done."
-echo "  active bar -> $(readlink -f "$X/waybar/config")"
-echo "  save a bookmark:  super+shift+N   (bar shows '◈ N' while a window is focused)"
-echo
-echo "  switch to the hypr bar:       ln -sfn $X/hypr/waybar/config $X/waybar/config && pkill waybar"
-echo "  switch back to driftwm:      ln -sfn $X/driftwm/waybar/config   $X/waybar/config && pkill waybar"
+echo "done.  bar follows the active WM — no ~/.config/waybar:"
+echo "  driftwm  ->  $X/driftwm/waybar"
+echo "  hyprland ->  $X/hypr/waybar"
+echo "  manual:   $BIN/start-waybar"

@@ -1,0 +1,10 @@
+// 02_reminiscent_h variant overrides
+{
+  "group/updates-drawer": {"orientation": "horizontal", "drawer": {"transition-duration": 400, "children-class": "updates-drawer", "click-to-reveal": false, "transition-left-to-right": true}, "modules": ["custom/updates-trigger", "custom/updates"]},
+  "custom/launcher": {"format": "\udb80\udf3d\u2009", "tooltip": true, "tooltip-format": "Control Center", "on-click": "gdbus call --session --dest com.github.dusky.controlcenter --object-path /com/github/dusky/controlcenter --method org.freedesktop.Application.Activate '{}'", "on-click-right": "gdbus call --session --dest org.dusky.quickpanal --object-path /org/dusky/quickpanal --method org.freedesktop.Application.Activate '{}'"},
+  "custom/inhibit-suspend": {"format": "{}", "exec": "if pgrep -x 'hypridle' > /dev/null; then echo '{\"text\": \"\udb83\udfaa\", \"tooltip\": \"Idle enabled. Click to disable.\", \"class\": \"enabled\"}'; else echo '{\"text\": \"\udb80\udd76\", \"tooltip\": \"Idle disabled. Click to enable.\", \"class\": \"disabled\"}'; fi", "return-type": "json", "interval": 5, "signal": 9, "on-click": "dusky-run $HOME/.local/bin/dusky/waybar/toggle_hypridle.sh", "escape": true},
+  "custom/lock": {"format": "\udb80\udf41", "on-click": "$HOME/.local/bin/dusky/hyprlock/lock.sh"},
+  "custom/reboot": {"format": "\udb81\udf09", "on-click": "systemctl reboot"},
+  "custom/updates-trigger": {"format": "\uf063", "exec": "echo '\uf063'", "exec-if": "grep -q '\"class\":\"pending\"' ~/.config/dusky/settings/waybar_update_counter_h 2>/dev/null", "interval": 5, "tooltip": false},
+  "custom/updates": {"exec": "tail -F ~/.config/dusky/settings/waybar_update_counter_h 2>/dev/null", "return-type": "json", "format": "{}", "tooltip": true, "on-click": "dusky-run kitty --class system_update.sh --hold -e $HOME/.local/bin/dusky/update_dusky/system_update.sh --all"},
+}

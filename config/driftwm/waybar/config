@@ -3,11 +3,11 @@
 // ### DEFAULT Laptop  - Top ### //
 {
 "include": [
-  "$HOME/.config/waybar/Modules",
-  "$HOME/.config/waybar/ModulesWorkspaces",
-  "$HOME/.config/waybar/ModulesCustom",
-  "$HOME/.config/waybar/ModulesGroups",
-  "$HOME/.config/waybar/UserModules",
+  "$HOME/.config/driftwm/waybar/Modules",
+  "$HOME/.config/driftwm/waybar/ModulesWorkspaces",
+  "$HOME/.config/driftwm/waybar/ModulesCustom",
+  "$HOME/.config/driftwm/waybar/ModulesGroups",
+  "$HOME/.config/driftwm/waybar/UserModules",
   ],
 "layer": "top",
 //"mode": "dock",
