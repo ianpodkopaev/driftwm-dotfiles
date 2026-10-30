@@ -22,6 +22,7 @@ pac() { "${SUDO[@]}" pacman -S --needed "$@"; }
 
 echo "==> 1/3 packages"
 pac waybar waybar-weather cava playerctl swaync grim slurp kitty rofi fish jq
+pac cliphist wl-clipboard
 pac gtklock swayidle imagemagick
 if ! command -v driftwm >/dev/null 2>&1; then
   if command -v yay >/dev/null 2>&1; then yay -S driftwm
@@ -64,6 +65,14 @@ Type=Application
 Name=Idle (swayidle + gtklock)
 Comment=Lock on idle / before sleep (driftwm)
 Exec=$BIN/start-idle
+X-GNOME-Autostart-enabled=true
+EOF
+cat > "$AUTOSTART/cliphist.desktop" <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Clipboard history (cliphist)
+Comment=Feed copied text and images to cliphist (driftwm)
+Exec=sh -c "wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store"
 X-GNOME-Autostart-enabled=true
 EOF
 

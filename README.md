@@ -56,6 +56,7 @@ Bar modules:
 | `swaync` | `swaync-client` (notifications, `super+shift+n`) |
 | `grim`, `slurp` | screenshots (`super+shift+s`) |
 | `jq` | waybar-weather / scripts |
+| `cliphist`, `wl-clipboard` | clipboard history for `super+alt+v` |
 | `gtklock`, `swayidle` | lockscreen + idle/lock daemon |
 | `imagemagick` | blurs the wallpaper for the lock background |
 
@@ -88,6 +89,7 @@ cd ~/dotfiles && bash install.sh
 | `super+Return` | Terminal |
 | `super+d` | rofi launcher |
 | `super+shift+s` | Region screenshot (`grim` + `slurp`) |
+| `super+alt+v` | Clipboard history (rofi + `cliphist`) |
 | `super+shift+n` | Mark notification |
 | `super+l`, `ctrl+alt+l` | Lock the screen |
 | `ctrl+alt+Delete` | Log out: stop driftwm, back to the login screen |
