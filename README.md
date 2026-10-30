@@ -30,6 +30,7 @@ config/
     configs/ dusky/ wallust/  style/   # all themes
   driftwm/config.toml      # driftwm keybindings (super+N bookmark toggle)
   hypr/waybar/             # FULL waybar for hyprland (identical look)
+  hypr/scripts/ClipManager.sh  # clipboard picker (super+alt+v)
   gtklock/                 # lockscreen theme (config.ini + style.css)
 start-waybar               # launcher: waybar -> the active WM's dir
 driftwm-bookmark           # super+N jump / bounce-back helper
@@ -77,8 +78,9 @@ cd ~/dotfiles && bash install.sh
    `~/.local/bin/driftwm-bookmark`, `~/.local/bin/lock-screen` and
    `~/.local/bin/start-idle`, installs `~/.config/driftwm/config.toml`
    (bookmark + lock keybindings), the gtklock theme, and removes any stale
-   shared `~/.config/waybar` (redundant now). Your `~/.config/hypr/scripts/*.sh`
-   stay untouched (not in repo).
+   shared `~/.config/waybar` (redundant now) and installs
+   `~/.config/hypr/scripts/ClipManager.sh` (the `super+alt+v` picker; the rest
+   of your `~/.config/hypr/scripts/*.sh` stay untouched, not in repo).
 3. Enables `driftwm.service` (starts on login).
 
 ## Keybindings
