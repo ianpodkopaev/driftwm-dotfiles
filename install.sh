@@ -23,7 +23,7 @@ pac() { "${SUDO[@]}" pacman -S --needed "$@"; }
 echo "==> 1/3 packages"
 pac waybar waybar-weather cava playerctl swaync grim slurp kitty rofi fish jq
 pac cliphist wl-clipboard
-pac gtklock swayidle imagemagick
+pac gtklock hyprlock swayidle imagemagick
 if ! command -v driftwm >/dev/null 2>&1; then
   if command -v yay >/dev/null 2>&1; then yay -S driftwm
   else echo "   driftwm not installed and yay not found:  yay -S driftwm  (AUR)"; fi
@@ -38,6 +38,8 @@ chmod +x "$X/driftwm/waybar/"*.py "$X/driftwm/waybar/bookmark-watch" \
          "$X/hypr/waybar/"*.py 2>/dev/null || true
 # driftwm keybindings (super+N bookmark jump/toggle)
 cp "$SRC/driftwm/config.toml" "$X/driftwm/config.toml"
+# ctrl+alt+l locks with hyprlock on this self-contained config
+cp "$SRC/driftwm/hyprlock.conf" "$X/driftwm/hyprlock.conf"
 # clipboard picker the super+alt+v binding spawns (rofi + cliphist + wl-copy)
 cp "$SRC/driftwm/scripts/ClipManager.sh" "$X/driftwm/scripts/ClipManager.sh"
 chmod +x "$X/driftwm/scripts/ClipManager.sh"

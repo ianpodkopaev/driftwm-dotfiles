@@ -102,14 +102,22 @@ cd ~/dotfiles && bash install.sh
 `focus_follows_mouse = true` gives hover focus (sloppy) instead of click.
 
 ## Lock screen
-`ctrl+alt+l` (or the bar's lock button, which runs `loginctl lock-session`) locks
-with **gtklock** — driftwm supports `ext-session-lock-v1`, so no Hyprland
-locker is needed. The look is a port of `~/.config/hypr/hyprlock.conf`: the
-driftwm wallpaper, blurred, behind a large clock, the date, and a square
-outlined password field. Colours come from the same wallust palette the bar
-uses (`config/gtklock/style.css` imports it), so the lock screen matches the
-desktop. `lock-screen` regenerates `~/.config/gtklock/background.jpg` with
-`magick` when the wallpaper changes (first lock takes ~1s).
+Two lockers, both via `ext-session-lock-v1` (driftwm supports it, so no Hyprland
+session is needed):
+
+- **`ctrl+alt+l` → hyprlock**, on its own config
+  `~/.config/driftwm/hyprlock.conf`. Same look as the hyprland lock screen
+  (blurred wallpaper, big clock, date, square password field) but deployed
+  self-contained: the wallust colours are inlined and the background is
+  driftwm's wallpaper, because `~/.config/hypr/hyprlock.conf` sources a palette
+  file that does not exist. Blur comes from hyprlock's own screencopy, so a
+  wallpaper change needs no rebuilding.
+- **Idle auto-lock and the bar's lock button** (`loginctl lock-session`) still
+  go through `lock-screen` → **gtklock**, with the ported theme in
+  `config/gtklock/`. `lock-screen` regenerates `~/.config/gtklock/background.jpg`
+  with `magick` when the wallpaper changes (first lock takes ~1s).
+
+Both cover every monitor and take the same PAM password.
 
 gtklock shows the password form on the first monitor it enumerates, which is
 not necessarily the one you're looking at, so `lock-screen` passes
