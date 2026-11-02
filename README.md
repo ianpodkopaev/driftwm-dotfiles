@@ -16,8 +16,10 @@ independent bar. There is **no** shared `~/.config/waybar` dir.
   --style ~/.config/<wm>/waybar/style/Dusky-07_minimal_h.css`.
 - CSS `@import`s resolve relative to each theme file's own dir, so every dir is
   fully portable and self-contained (no cross-WM refs, no shared bank).
-- Under driftwm the bar autostarts via an XDG `.desktop` file
-  (`~/.config/autostart/waybar.desktop`); driftwm runs `xdg-desktop-autostart`.
+- Under driftwm the bar starts from driftwm itself:
+  `autostart = ["start-waybar"]` in `~/.config/driftwm/config.toml`. Not an XDG
+  autostart entry — those run before the Wayland socket exists, so waybar
+  exits with `cannot open display: :0`.
 
 ## Layout (repo)
 ```
@@ -77,7 +79,7 @@ cd ~/dotfiles && bash install.sh
    `~/.config/hypr/waybar/`, deploys `~/.local/bin/start-waybar` and
    `~/.local/bin/driftwm-bookmark`, `~/.local/bin/lock-screen` and
    `~/.local/bin/start-idle`, installs `~/.config/driftwm/config.toml`
-   (bookmark + lock keybindings), the gtklock theme, and removes any stale
+   (bookmark + lock keybindings + the waybar autostart), the gtklock theme, and removes any stale
    shared `~/.config/waybar` (redundant now) and installs
    `~/.config/driftwm/scripts/ClipManager.sh` (the `super+alt+v` picker). Your
    `~/.config/hypr/scripts/*.sh` stay untouched (not in repo).

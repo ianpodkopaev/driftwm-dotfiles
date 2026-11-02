@@ -6,8 +6,8 @@
 #   ~/.config/driftwm/waybar/
 #   ~/.config/hypr/waybar/
 # A launcher (~/.local/bin/start-waybar) points waybar at whichever WM is
-# running, and an XDG autostart entry (driftwm runs xdg-desktop-autostart)
-# starts it on login. There is NO ~/.config/waybar dir.
+# running; driftwm's own `autostart` runs it on login (an XDG autostart entry
+# runs before the Wayland socket exists). There is NO ~/.config/waybar dir.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -54,14 +54,9 @@ chmod +x "$BIN/start-waybar" "$BIN/driftwm-bookmark" \
 mkdir -p "$X/gtklock"
 cp -a "$SRC/gtklock/." "$X/gtklock"
 # XDG autostart (picked up by driftwm's xdg-desktop-autostart.target)
-cat > "$AUTOSTART/waybar.desktop" <<EOF
-[Desktop Entry]
-Type=Application
-Name=Waybar
-Comment=The bar — follows the active WM (driftwm or hyprland)
-Exec=$BIN/start-waybar
-X-GNOME-Autostart-enabled=true
-EOF
+# waybar is NOT here: driftwm's own `autostart = ["start-waybar"]` runs it once
+# the Wayland socket exists (an XDG entry runs too early -> "cannot open display").
+rm -f "$AUTOSTART/waybar.desktop"
 cat > "$AUTOSTART/swayidle.desktop" <<EOF
 [Desktop Entry]
 Type=Application

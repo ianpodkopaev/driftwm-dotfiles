@@ -2,6 +2,12 @@
 # navigation, resize, zoom, window cycling, media and brightness; only the
 # personal pieces from hypr and the non-default binds go here.
 
+# ---------------------------------------------------------------- autostart
+# The bar is started here, not from ~/.config/autostart: the XDG autostart
+# runs before the Wayland socket exists and waybar died with "cannot open
+# display: :0". driftwm runs these through sh -c with its own child env.
+autostart = ["start-waybar"]
+
 # ---------------------------------------------------------------- focus
 focus_follows_mouse = true   # hover focus (sloppy), not click
 
@@ -69,6 +75,7 @@ position = [1920, 450]
 "super+tab" = "cycle-windows forward"
 "super+shift+tab" = "cycle-windows backward"
 "alt+tab" = "none"                                 # you use mod+tab now
+"super+w" = "none"                                 # was: zoom reset; unbind per user
 "super+l" = "spawn lock-screen"                    # hypr: LockScreen.sh
 "ctrl+alt+l" = "spawn lock-screen"                 # same lock, Windows-style chord
 # ctrl+alt+del: stop the compositor -> driftwm-session tears the session down
