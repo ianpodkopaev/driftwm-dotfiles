@@ -83,7 +83,7 @@ position = [1920, 450]
 "super+shift+tab" = "cycle-windows backward"
 "alt+tab" = "none"                                 # you use mod+tab now
 "super+w" = "zoom-to-fit"                          # default restored; zoom reset is super+0
-"ctrl+alt+l" = "spawn lock-screen"                 # same lock, Windows-style chord
+"ctrl+alt+l" = "spawn hyprlock -c $HOME/.config/driftwm/hyprlock.conf"  # hypr: hyprlock
 # ctrl+alt+del: stop the compositor -> driftwm-session tears the session down
 # and the display manager (plasmalogin) shows its login screen again.
 "ctrl+alt+Delete" = "spawn systemctl --user stop driftwm.service"
