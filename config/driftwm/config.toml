@@ -3,10 +3,17 @@
 # personal pieces from hypr and the non-default binds go here.
 
 # ---------------------------------------------------------------- autostart
-# The bar is started here, not from ~/.config/autostart: the XDG autostart
-# runs before the Wayland socket exists and waybar died with "cannot open
-# display: :0". driftwm runs these through sh -c with its own child env.
-autostart = ["start-waybar"]
+# The bar, the idle daemon and the clipboard watchers are started here, not
+# from ~/.config/autostart: XDG autostart runs before the Wayland socket
+# exists, so waybar died with "cannot open display: :0" and swayidle/wl-paste
+# with "Failed to connect to a Wayland server". driftwm runs these through
+# sh -c with its own child env (WAYLAND_DISPLAY included).
+autostart = [
+    "start-waybar",
+    "start-idle",
+    "wl-paste --type text --watch cliphist store",
+    "wl-paste --type image --watch cliphist store",
+]
 
 # ---------------------------------------------------------------- focus
 focus_follows_mouse = true   # hover focus (sloppy), not click

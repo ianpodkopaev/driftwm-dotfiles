@@ -53,26 +53,12 @@ chmod +x "$BIN/start-waybar" "$BIN/driftwm-bookmark" \
 # lockscreen theme (gtklock); background.jpg is generated on first lock
 mkdir -p "$X/gtklock"
 cp -a "$SRC/gtklock/." "$X/gtklock"
-# XDG autostart (picked up by driftwm's xdg-desktop-autostart.target)
-# waybar is NOT here: driftwm's own `autostart = ["start-waybar"]` runs it once
-# the Wayland socket exists (an XDG entry runs too early -> "cannot open display").
-rm -f "$AUTOSTART/waybar.desktop"
-cat > "$AUTOSTART/swayidle.desktop" <<EOF
-[Desktop Entry]
-Type=Application
-Name=Idle (swayidle + gtklock)
-Comment=Lock on idle / before sleep (driftwm)
-Exec=$BIN/start-idle
-X-GNOME-Autostart-enabled=true
-EOF
-cat > "$AUTOSTART/cliphist.desktop" <<'EOF'
-[Desktop Entry]
-Type=Application
-Name=Clipboard history (cliphist)
-Comment=Feed copied text and images to cliphist (driftwm)
-Exec=sh -c "wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store"
-X-GNOME-Autostart-enabled=true
-EOF
+# Wayland clients (waybar, swayidle, cliphist watchers) are started by
+# driftwm's own `autostart` in config.toml: an XDG autostart entry runs before
+# the Wayland socket exists and dies ("cannot open display: :0"). Remove the
+# old entries so they can't double-start.
+rm -f "$AUTOSTART/waybar.desktop" "$AUTOSTART/swayidle.desktop" \
+      "$AUTOSTART/cliphist.desktop"
 
 echo "==> 3/3 driftwm.service"
 if command -v driftwm >/dev/null 2>&1; then
