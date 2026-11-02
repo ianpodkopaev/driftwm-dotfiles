@@ -34,10 +34,9 @@ config/
   driftwm/config.toml      # driftwm keybindings (super+N bookmark toggle)
   driftwm/scripts/ClipManager.sh  # clipboard picker (super+alt+v)
   hypr/waybar/             # FULL waybar for hyprland (identical look)
-  gtklock/                 # lockscreen theme (config.ini + style.css)
 start-waybar               # launcher: waybar -> the active WM's dir
 driftwm-bookmark           # super+N jump / bounce-back helper
-lock-screen                # lock now (gtklock, blurred wallpaper behind)
+lock-screen                # lock now (hyprlock, blurred wallpaper behind)
 start-idle                 # swayidle: lock on idle / before sleep
 README.md  install.sh  .gitignore
 ```
@@ -54,15 +53,14 @@ README.md  install.sh  .gitignore
 Bar modules:
 | Package | Used by |
 |---|---|
-| `waybar-weather` | `custom/weather2` |
+| `waybar-weather` (AUR) | `custom/weather2` |
 | `cava` | audio visualizer |
 | `playerctl` | media controls |
 | `swaync` | `swaync-client` (notifications, `super+shift+n`) |
 | `grim`, `slurp` | screenshots (`super+shift+s`) |
 | `jq` | waybar-weather / scripts |
 | `cliphist`, `wl-clipboard` | clipboard history for `super+alt+v` |
-| `gtklock`, `swayidle` | lockscreen + idle/lock daemon |
-| `imagemagick` | blurs the wallpaper for the lock background |
+| `hyprlock`, `swayidle` | lockscreen + idle/lock daemon |
 
 Optional: `hyprland` (for the alternate bar), `btop` (monitor window).
 
@@ -75,12 +73,13 @@ git clone <your-url> ~/dotfiles
 cd ~/dotfiles && bash install.sh
 ```
 `install.sh` (idempotent):
-1. `pacman -S` the deps; installs `driftwm` from the AUR if missing.
+1. `pacman -S` the deps; installs the AUR-only bits (`waybar-weather` and
+   `driftwm`) with `yay`/`paru` if missing (not fatal if no AUR helper).
 2. Copies the full waybar into `~/.config/driftwm/waybar/` and
    `~/.config/hypr/waybar/`, deploys `~/.local/bin/start-waybar` and
    `~/.local/bin/driftwm-bookmark`, `~/.local/bin/lock-screen` and
    `~/.local/bin/start-idle`, installs `~/.config/driftwm/config.toml`
-   (bookmark + lock keybindings + autostart), the gtklock theme, and removes any stale
+   (bookmark + lock keybindings + autostart), and removes any stale
    shared `~/.config/waybar` (redundant now) and installs
    `~/.config/driftwm/scripts/ClipManager.sh` (the `super+alt+v` picker). Your
    `~/.config/hypr/scripts/*.sh` stay untouched (not in repo).
@@ -102,35 +101,26 @@ cd ~/dotfiles && bash install.sh
 `focus_follows_mouse = true` gives hover focus (sloppy) instead of click.
 
 ## Lock screen
-Two lockers, both via `ext-session-lock-v1` (driftwm supports it, so no Hyprland
+One locker, via `ext-session-lock-v1` (driftwm supports it, so no Hyprland
 session is needed):
 
-- **`ctrl+alt+l` → hyprlock**, on its own config
+- **`ctrl+alt+l`, idle auto-lock and the bar's lock button**
+  (`loginctl lock-session`) all go through hyprlock, on its own config
   `~/.config/driftwm/hyprlock.conf`. Same look as the hyprland lock screen
   (blurred wallpaper, big clock, date, square password field) but deployed
   self-contained: the wallust colours are inlined and the background is
   driftwm's wallpaper, because `~/.config/hypr/hyprlock.conf` sources a palette
   file that does not exist. Blur comes from hyprlock's own screencopy, so a
   wallpaper change needs no rebuilding.
-- **Idle auto-lock and the bar's lock button** (`loginctl lock-session`) still
-  go through `lock-screen` → **gtklock**, with the ported theme in
-  `config/gtklock/`. `lock-screen` regenerates `~/.config/gtklock/background.jpg`
-  with `magick` when the wallpaper changes (first lock takes ~1s).
 
-Both cover every monitor and take the same PAM password.
+It covers every monitor and takes the same PAM password.
 
-gtklock shows the password form on the first monitor it enumerates, which is
-not necessarily the one you're looking at, so `lock-screen` passes
-`-M <active output>` (read from `driftwm msg state`). With more than one
-monitor, both are covered but the form follows the active output. The pointer
-blanks itself after 5 s idle (`idle-hide`), and any key or motion brings the
-form and the pointer back.
-
-`start-idle` runs `swayidle` for auto-lock, mirroring `hypridle.conf`: warn at
-9 min, lock at 10 min, lock on `loginctl lock-session` and before sleep.
-hypridle's "screen off" listener is not ported — `hyprctl dispatch dpms off`
-has no driftwm equivalent. Test the theme without locking yourself out with
-`gtklock --preview` (any password unlocks).
+`lock-screen` is the wrapper swayidle and the bar call; it starts hyprlock with
+driftwm's config and does nothing if hyprlock is already running. `start-idle`
+runs `swayidle` for auto-lock, mirroring `hypridle.conf`: warn at 9 min, lock at
+10 min, lock on `loginctl lock-session` and before sleep. hypridle's "screen
+off" listener is not ported — `hyprctl dispatch dpms off` has no driftwm
+equivalent.
 
 ## Bookmark behaviour
 The bar centre is a row of **all 10 bookmarks**, styled 1:1 like the hyprland

@@ -20,13 +20,31 @@ SUDO=()
 [ "$(id -u)" -eq 0 ] || SUDO=(sudo)
 pac() { "${SUDO[@]}" pacman -S --needed "$@"; }
 
+# AUR helper (waybar-weather and driftwm are not in the official repos)
+aur() {
+  local helper
+  for helper in yay paru; do
+    if command -v "$helper" >/dev/null 2>&1; then
+      "$helper" -S --needed "$@"
+      return
+    fi
+  done
+  echo "   no AUR helper (yay/paru) found and '$*' is not installed."
+  echo "   install manually:  yay -S $*"
+  return 1
+}
+
 echo "==> 1/3 packages"
-pac waybar waybar-weather cava playerctl swaync grim slurp kitty rofi fish jq
+pac waybar cava playerctl swaync grim slurp kitty rofi fish jq
 pac cliphist wl-clipboard
-pac gtklock hyprlock swayidle imagemagick
-if ! command -v driftwm >/dev/null 2>&1; then
-  if command -v yay >/dev/null 2>&1; then yay -S driftwm
-  else echo "   driftwm not installed and yay not found:  yay -S driftwm  (AUR)"; fi
+pac hyprlock swayidle
+# AUR-only packages; a missing weather module should not abort the whole install
+AUR_MISSING=()
+for pkg in waybar-weather driftwm; do
+  command -v "$pkg" >/dev/null 2>&1 || AUR_MISSING+=("$pkg")
+done
+if [ ${#AUR_MISSING[@]} -gt 0 ]; then
+  aur "${AUR_MISSING[@]}" || true
 fi
 
 echo "==> 2/3 full waybar into each WM dir + launcher + autostart"
@@ -52,9 +70,8 @@ cp "$REPO/lock-screen" "$BIN/lock-screen"
 cp "$REPO/start-idle" "$BIN/start-idle"
 chmod +x "$BIN/start-waybar" "$BIN/driftwm-bookmark" \
          "$BIN/lock-screen" "$BIN/start-idle"
-# lockscreen theme (gtklock); background.jpg is generated on first lock
-mkdir -p "$X/gtklock"
-cp -a "$SRC/gtklock/." "$X/gtklock"
+# gtklock is no longer used; drop the theme an older install left behind
+rm -rf "$X/gtklock"
 # Wayland clients (waybar, swayidle, cliphist watchers) are started by
 # driftwm's own `autostart` in config.toml: an XDG autostart entry runs before
 # the Wayland socket exists and dies ("cannot open display: :0"). Remove the
