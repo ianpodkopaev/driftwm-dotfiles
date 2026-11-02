@@ -96,13 +96,13 @@ cd ~/dotfiles && bash install.sh
 | `super+shift+s` | Region screenshot (`grim` + `slurp`) |
 | `super+alt+v` | Clipboard history (rofi + `cliphist`) |
 | `super+shift+n` | Mark notification |
-| `super+l`, `ctrl+alt+l` | Lock the screen |
+| `ctrl+alt+l` | Lock the screen |
 | `ctrl+alt+Delete` | Log out: stop driftwm, back to the login screen |
 
 `focus_follows_mouse = true` gives hover focus (sloppy) instead of click.
 
 ## Lock screen
-`super+l` (or the bar's lock button, which runs `loginctl lock-session`) locks
+`ctrl+alt+l` (or the bar's lock button, which runs `loginctl lock-session`) locks
 with **gtklock** — driftwm supports `ext-session-lock-v1`, so no Hyprland
 locker is needed. The look is a port of `~/.config/hypr/hyprlock.conf`: the
 driftwm wallpaper, blurred, behind a large clock, the date, and a square

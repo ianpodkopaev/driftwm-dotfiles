@@ -82,8 +82,7 @@ position = [1920, 450]
 "super+tab" = "cycle-windows forward"
 "super+shift+tab" = "cycle-windows backward"
 "alt+tab" = "none"                                 # you use mod+tab now
-"super+w" = "none"                                 # was: zoom reset; unbind per user
-"super+l" = "spawn lock-screen"                    # hypr: LockScreen.sh
+"super+w" = "zoom-to-fit"                          # default restored; zoom reset is super+0
 "ctrl+alt+l" = "spawn lock-screen"                 # same lock, Windows-style chord
 # ctrl+alt+del: stop the compositor -> driftwm-session tears the session down
 # and the display manager (plasmalogin) shows its login screen again.
