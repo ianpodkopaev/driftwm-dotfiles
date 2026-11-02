@@ -76,7 +76,7 @@ position = [1920, 450]
 [keybindings]
 "super+e" = "exec nautilus --new-window"          # was: your UserKeybinds override
 "super+d" = "exec-launcher"                        # rofi via $LAUNCHER
-"super+Return" = "exec-terminal"
+"super+Return" = "spawn kitty -o \"initial_window_width=1280\" -o \"initial_window_height=800\""   # 2x the 640x400 default
 "super+shift+F" = "toggle-fullscreen"              # hypr: true fullscreen; mod+f stays fit
 "super+space" = "toggle-pin-to-screen"             # hypr float = pin in drift's model
 "super+tab" = "cycle-windows forward"

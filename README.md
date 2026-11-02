@@ -91,7 +91,7 @@ cd ~/dotfiles && bash install.sh
 |---|---|
 | `super+1..0` | Jump to bookmark N — or bounce back if you're already on it |
 | `super+shift+1..0` | Save the current view as bookmark N |
-| `super+Return` | Terminal |
+| `super+Return` | Terminal (kitty at 2× the default 640×400 = 1280×800) |
 | `super+d` | rofi launcher |
 | `super+shift+s` | Region screenshot (`grim` + `slurp`) |
 | `super+alt+v` | Clipboard history (rofi + `cliphist`) |
